@@ -1,0 +1,9 @@
+/* ARCANE · MINI-EVENTOS · TEMAS CSS · COMPATIBILIDADE V1
+
+   A primeira versão externa mantém o CSS visual dentro do sistema.js para
+   reproduzir exatamente o comportamento atual. Este arquivo já é carregado
+   pelo loader e receberá os temas gradualmente na segunda fase da migração.
+
+   Não mover para cá o CSS crítico anti-flash. Ele deve continuar na folha de
+   estilo do Forumeiros para existir antes de qualquer requisição externa.
+*/
