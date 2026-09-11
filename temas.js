@@ -4,7 +4,7 @@
 (function (window) {
   'use strict';
   window.ArcaneMiniEventosTemas = {
-    versao: '0.1.11',
+    versao: '0.1.13',
     eventos: {
     'blecaute': {
       nome: 'Blecaute em Hogwarts',
@@ -131,7 +131,7 @@
       lateral: {
         imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/mariposa-caveira.png', largura: 215, opacidade: .67,
         filtro: 'grayscale(1) saturate(.12) brightness(.84) contrast(1.1)',
-        deslocamentoX: 28, deslocamentoRankY: 24, proporcaoY: .72, limiteY: 650,
+        deslocamentoX: 20, deslocamentoRankY: 24, proporcaoY: .72, limiteY: 650,
         transformacao: 'translate(-32%,-50%) rotate(-8deg)'
       }
     },

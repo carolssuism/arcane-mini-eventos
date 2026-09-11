@@ -134,7 +134,7 @@
       lateral: {
         imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/mariposa-caveira.png', largura: 215, opacidade: .67,
         filtro: 'grayscale(1) saturate(.12) brightness(.84) contrast(1.1)',
-        deslocamentoX: 28, deslocamentoRankY: 24, proporcaoY: .72, limiteY: 650,
+        deslocamentoX: 20, deslocamentoRankY: 24, proporcaoY: .72, limiteY: 650,
         transformacao: 'translate(-32%,-50%) rotate(-8deg)'
       }
     },
@@ -490,7 +490,25 @@
         linkAvatar.style.cursor = 'default';
       }
       var avatar = post.querySelector('.postprofile>.avatar-container>a>img,.postprofile>.avatar-container>img');
-      if (avatar) { avatar.removeAttribute('srcset'); avatar.alt = 'Narração'; avatar.src = 'https://i.imgur.com/0PrYcPi.png'; }
+      if (avatar) {
+        avatar.removeAttribute('srcset');
+        avatar.alt = 'Narração';
+        avatar.src = 'https://i.imgur.com/0PrYcPi.png';
+        avatar.style.setProperty('display', 'block', 'important');
+        avatar.style.setProperty('width', '250px', 'important');
+        avatar.style.setProperty('height', '400px', 'important');
+        avatar.style.setProperty('max-width', 'none', 'important');
+        avatar.style.setProperty('max-height', 'none', 'important');
+        avatar.style.setProperty('object-fit', 'cover', 'important');
+        avatar.style.setProperty('object-position', 'center', 'important');
+      }
+      if (linkAvatar) {
+        linkAvatar.style.setProperty('display', 'block', 'important');
+        linkAvatar.style.setProperty('width', '250px', 'important');
+        linkAvatar.style.setProperty('height', '400px', 'important');
+        linkAvatar.style.setProperty('margin', '20px auto 0', 'important');
+        linkAvatar.style.setProperty('overflow', 'hidden', 'important');
+      }
       if (e.id === 'chuva-estrelas') {
         var alvosEstrelas = [post.querySelector('#rpost-header'), post.querySelector('.rrank')];
         alvosEstrelas.forEach(function (alvo) {
