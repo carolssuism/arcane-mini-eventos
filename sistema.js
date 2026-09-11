@@ -580,6 +580,11 @@
 
   instalarCSSSeguro('arcane-me-baile-v018-ocultar-seletor-css', '#arcane-baile-preview .ab-controles{display:none!important}');
 
+  /* V0.1.20: a abertura rubra recebe o mesmo vinho quase preto dos cards, sem
+     o gradiente legado. Depois da publicação do marcador permanente, o gatilho
+     não volta a ser oferecido no formulário da administração. */
+  instalarCSSSeguro('arcane-me-baile-v020-fase-rubra-css', 'html.arcane-baile-rubra #arcane-baile-preview .ab-header{filter:none!important;background-color:#43070a!important;background-image:url("https://raw.githubusercontent.com/carolssuism/arcane-mini-eventos/main/assets/baile-rubro.png")!important;background-position:center!important;background-size:cover!important;background-repeat:no-repeat!important;background-blend-mode:multiply!important}html.arcane-baile-rubra .arcane-me-meta .arcane-me-fase-rubra{display:none!important}');
+
   /* Os corvos enquadram o formulário pelos dois lados; o lado direito é espelhado. */
   instalarCSSSeguro('arcane-me-baile-update-prata-fix-css', 'html.arcane-evento-baile-mascaras:not(.arcane-baile-rubra) .arcane-me-update.baile .mu-header{filter:grayscale(1) brightness(.68) contrast(1.14)!important;background-color:#bfc1c3!important;background-blend-mode:multiply!important}html.arcane-evento-baile-mascaras:not(.arcane-baile-rubra) .arcane-me-update.baile .mu-header:before{background:rgba(12,13,14,.18)!important;mix-blend-mode:multiply!important}');
 
