@@ -864,7 +864,7 @@
     return '<div class="arcane-me-rp ' + e.config.classe + ' ' + largura + ' visual-' + visual + '" data-evento="' + e.id + '"><div class="me-caixa"><div class="me-topo"></div><div class="me-lateral"></div><div class="me-corpo"><texto-evento>' + texto + '</texto-evento></div></div></div>';
   }
 
-  function criarUpdate(e, texto, titulo, subtitulo) {
+  function criarUpdate(e, texto, titulo, subtitulo, ativarFaseRubra) {
     var a = e.config.atualizacao || {};
     var detalhe = a.detalhe || {};
     if (typeof detalhe === 'string') detalhe = { imagem: detalhe };
@@ -875,7 +875,10 @@
     var etiqueta = escapar(a.etiqueta || 'Atualização da narração') || 'ATUALIZAÇÃO DA NARRAÇÃO';
     titulo = escapar(titulo) || e.config.padraoTitulo;
     subtitulo = escapar(subtitulo) || e.config.padraoSubtitulo;
-    return '<div class="arcane-me-update ' + e.config.classe + '" data-evento="' + e.id + '"><meta-titulo>' + titulo + '</meta-titulo><meta-subtitulo>' + subtitulo + '</meta-subtitulo><div class="mu-header">' + detalheHtml + '<div class="mu-label">' + etiqueta + '</div><div class="mu-title">' + titulo + '</div><div class="mu-subtitle">' + subtitulo + '</div></div><div class="mu-body"><span class="mu-transition" aria-hidden="true"></span><texto-update>' + texto + '</texto-update></div></div>';
+    var marcadorFase = e.id === 'baile-mascaras' && ativarFaseRubra
+      ? '<span class="arcane-baile-fase-rubra" aria-hidden="true" style="display:none!important">MORTE RUBRA</span>'
+      : '';
+    return '<div class="arcane-me-update ' + e.config.classe + '" data-evento="' + e.id + '">' + marcadorFase + '<meta-titulo>' + titulo + '</meta-titulo><meta-subtitulo>' + subtitulo + '</meta-subtitulo><div class="mu-header">' + detalheHtml + '<div class="mu-label">' + etiqueta + '</div><div class="mu-title">' + titulo + '</div><div class="mu-subtitle">' + subtitulo + '</div></div><div class="mu-body"><span class="mu-transition" aria-hidden="true"></span><texto-update>' + texto + '</texto-update></div></div>';
   }
 
   function instalarCSSPostagens(e) {
@@ -931,6 +934,13 @@
       '.arcane-me-meta label{display:grid;gap:6px;min-width:0}',
       '.arcane-me-meta span{color:' + e.config.cor + ';font:600 8px/1 Montserrat,Arial,sans-serif;letter-spacing:1px;text-transform:uppercase}',
       '.arcane-me-meta input{box-sizing:border-box;width:100%;min-width:0;height:34px;padding:0 11px;border:1px solid #354238!important;border-radius:0!important;background:#101611!important;color:#e5e7e7!important}',
+      '.arcane-baile-fase-rubra{display:none!important}',
+      '.arcane-me-meta .arcane-me-fase-rubra{grid-column:1/-1;display:flex;align-items:center;gap:11px;margin-top:2px;padding:11px 13px;border:1px solid rgba(143,36,36,.58);background:rgba(27,5,5,.58);cursor:pointer}',
+      '.arcane-me-meta .arcane-me-fase-rubra input{appearance:none;-webkit-appearance:none;flex:0 0 16px;width:16px!important;min-width:16px!important;height:16px!important;margin:0;padding:0!important;border:1px solid #8f2424!important;background:#0a0808!important;cursor:pointer}',
+      '.arcane-me-meta .arcane-me-fase-rubra input:checked{background:#b51f26!important;box-shadow:inset 0 0 0 3px #0a0808,0 0 10px rgba(181,31,38,.28)}',
+      '.arcane-me-meta .arcane-me-fase-rubra>span{display:grid;gap:4px;color:#c8aaa5!important;letter-spacing:1px}',
+      '.arcane-me-meta .arcane-me-fase-rubra b{color:#e22a2a;font:600 9px/1 Montserrat,Arial,sans-serif;letter-spacing:1.15px;text-transform:uppercase}',
+      '.arcane-me-meta .arcane-me-fase-rubra small{color:#9d8c89;font:500 8px/1.35 Poppins,Arial,sans-serif;letter-spacing:.2px;text-transform:none}',
       '.arcane-me-form>div:nth-of-type(2){box-sizing:border-box!important;position:relative!important;z-index:1!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;min-height:58px!important;margin:0!important;border:1px solid #29342d!important;background:rgba(8,13,9,.94)!important}',
       '.arcane-me-narrador .arcane-me-visual,.arcane-me-narrador .arcane-me-largura{display:none!important}',
       '@media(max-width:760px){.arcane-me-form{max-width:calc(100% - 12px)!important}.arcane-me-toolbar{flex-wrap:wrap;align-items:flex-start}.arcane-me-toolbar-title{flex-basis:100%;margin:3px 0 5px}.arcane-me-toolbar select{flex:1 1 135px;min-width:0}.arcane-me-meta{grid-template-columns:1fr}.arcane-me-form:before,.arcane-me-form:after{opacity:.22}}'
@@ -1015,10 +1025,32 @@
     if (!e || e.id !== 'baile-mascaras') return;
     var marcador = e.marcador || document.getElementById('arcane-baile-preview');
     var controle = marcador && marcador.querySelector('#ab-rubra');
+    var narrativaAntes = [
+      'Ninguém soube dizer onde ficava o salão. As carruagens atravessaram caminhos sem nome e, quando as portas se abriram, havia apenas mármore escuro, lustres acesos e música derramando-se por galerias que pareciam maiores do que o edifício poderia comportar.',
+      'Sob cortinas de veludo e fileiras de espelhos antigos, figuras mascaradas dançavam sem anunciar títulos ou procedências. Nenhum anfitrião veio recebê-las. Ainda assim, as taças permaneciam cheias, a orquestra não errava uma nota e, a cada volta da dança, novos convidados surgiam entre os reflexos.'
+    ];
+    var narrativaRubra = [
+      'À meia-noite, o último acorde morreu sem eco. No alto da escadaria surgiu uma figura envolta em vermelho, alta e imóvel, com uma máscara que não imitava rosto algum. Ninguém a vira entrar; ainda assim, todos os espelhos já guardavam o seu reflexo.',
+      'As portas se fecharam ao mesmo tempo. Mãos apressadas buscaram laços, fivelas e fitas, mas as máscaras não deixavam mais os rostos: porcelana, metal e renda haviam se tornado quentes como pele. Quando a figura rubra desceu o primeiro degrau, a música recomeçou sozinha — e o salão exigiu outra dança.'
+    ];
     function atualizar() {
-      var rubra = !!(controle && controle.checked);
+      var rubraPublicada = !!document.querySelector('.arcane-baile-fase-rubra');
+      var rubra = rubraPublicada || !!(controle && controle.checked);
       document.documentElement.classList.toggle('arcane-baile-rubra', rubra);
       document.documentElement.classList.toggle('arcane-baile-prata', !rubra);
+      var caixaNarrativa = marcador && marcador.querySelector('.ab-texto');
+      if (caixaNarrativa) {
+        var paragrafos = Array.prototype.filter.call(caixaNarrativa.children, function (item) { return item.tagName === 'P'; });
+        while (paragrafos.length < 2) {
+          var novoParagrafo = document.createElement('p');
+          caixaNarrativa.insertBefore(novoParagrafo, caixaNarrativa.querySelector('.ab-citacao'));
+          paragrafos.push(novoParagrafo);
+        }
+        var narrativa = rubra ? narrativaRubra : narrativaAntes;
+        paragrafos[0].textContent = narrativa[0];
+        paragrafos[1].textContent = narrativa[1];
+        for (var p = 2; p < paragrafos.length; p += 1) paragrafos[p].remove();
+      }
       var paleta = rubra
         ? ['#731818', '#b51f26', '#e22a2a', '#f0d9d4', '#c8aaa5']
         : ['#777269', '#c9c3b5', '#eee9df', '#8f897d', '#dedbd3'];
@@ -1073,6 +1105,13 @@
       meta.querySelector('.arcane-me-title').value = extrairMeta(codigo, 'meta-titulo');
       meta.querySelector('.arcane-me-subtitle').value = extrairMeta(codigo, 'meta-subtitulo');
       sc.parentNode.insertBefore(meta, sc);
+      if (e.id === 'baile-mascaras') {
+        var fase = document.createElement('label');
+        fase.className = 'arcane-me-fase-rubra';
+        fase.innerHTML = '<input type="checkbox" class="arcane-me-fase-rubra-check"><span><b>Iniciar Morte Rubra</b><small>Esta atualização fará a virada permanente do tema.</small></span>';
+        meta.appendChild(fase);
+        fase.querySelector('input').checked = /arcane-baile-fase-rubra/i.test(codigo);
+      }
     }
     var toolbar = document.createElement('div'); toolbar.className = 'arcane-me-toolbar';
     var opcoesVisuais = (e.config.visuais || [{ valor: 'header', nome: 'Visual · Header' }]).map(function (item) { return '<option value="' + item.valor + '">' + item.nome + '</option>'; }).join('');
@@ -1101,7 +1140,8 @@
     largura.addEventListener('change', function () { try { localStorage.setItem(CHAVE_LARGURA, largura.value); } catch (erro) {} });
     form.addEventListener('submit', function (ev) {
       var texto = sincronizar(editor, campo, original); if (!texto) { ev.preventDefault(); editor.focus(); return; }
-      var pronto = U1 ? criarUpdate(e, texto, meta.querySelector('.arcane-me-title').value, meta.querySelector('.arcane-me-subtitle').value) : criarPost(e, texto, largura.value, visual.value);
+      var faseRubra = meta && meta.querySelector('.arcane-me-fase-rubra-check');
+      var pronto = U1 ? criarUpdate(e, texto, meta.querySelector('.arcane-me-title').value, meta.querySelector('.arcane-me-subtitle').value, !!(faseRubra && faseRubra.checked)) : criarPost(e, texto, largura.value, visual.value);
       campo.value = pronto; original.value = pronto; campo.dispatchEvent(new Event('input', { bubbles: true }));
     }, true);
   }
