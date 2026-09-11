@@ -1,4 +1,4 @@
-/* ARCANE · MINI-EVENTOS · SISTEMA EXTERNO · V0.1.1
+/* ARCANE · MINI-EVENTOS · SISTEMA EXTERNO · V0.1.5
    Motor V68 + Painel V14 + Mural V7. */
 (function (window) {
   'use strict';
@@ -6,7 +6,7 @@
   window.__ARCANE_MINI_EVENTOS_SISTEMA_V1__ = true;
 
 /* ARCANE · MINI-EVENTOS · MOTOR UNIFICADO V68 · IDENTIDADE ATÔMICA DO NARRADOR · CSS FRACIONADO
-   Eventos: Blecaute em Hogwarts + Chuva de Estrelas Cadentes + Tempestade Mágica
+   Eventos: Blecaute + Chuva de Estrelas + Tempestade Mágica + Baile de Máscaras
    Aplicação: em todas as páginas.
 */
 (function () {
@@ -64,6 +64,21 @@
       },
       imersao: { ativo: true, deslocamentoInicio: 10 }
     },
+    'baile-mascaras': {
+      nome: 'Baile de Máscaras', classe: 'baile', topico: '66',
+      cor: '#c9c3b5', cor2: '#eee9df', cor3: '#8f897d',
+      fundo: '#080908', corpo: '#101110', linha: '#5e5a52', texto: '#dedbd3',
+      cores: ['#777269', '#c9c3b5', '#eee9df', '#8f897d', '#dedbd3'],
+      etiqueta: 'Os sinos ainda não tocaram', padraoTitulo: 'A ÚLTIMA DANÇA',
+      padraoSubtitulo: 'Toda máscara guarda uma verdade.',
+      atualizacao: { etiqueta: 'Atualização da narração', imagem: 'https://i.pinimg.com/1200x/aa/f1/77/aaf177566f87a33c76660484844f707c.jpg', posicao: 'center 48%' },
+      visuais: [{ valor: 'header', nome: 'Visual · Header' }, { valor: 'lateral', nome: 'Visual · Lateral' }],
+      decoracoes: {
+        superior: { imagem: 'https://i.imgur.com/UDF1ipN.png', largura: '380px', x: '-76px', y: '-116px', rotacao: '-90deg', opacidade: '.68', filtro: 'grayscale(1) saturate(.2) brightness(.94) contrast(1.08)' },
+        inferior: { imagem: 'https://i.imgur.com/UDF1ipN.png', largura: '340px', x: '-64px', y: '-112px', rotacao: '-90deg', opacidade: '.56', filtro: 'grayscale(1) saturate(.2) brightness(.88) contrast(1.08)' }
+      },
+      imersao: { ativo: true, deslocamentoInicio: 10 }
+    },
     'tempestade-magica': {
       nome: 'Tempestade Mágica',
       classe: 'tempestade',
@@ -106,6 +121,19 @@
       lateral: {
         imagem: 'https://i.imgur.com/UqTfoT5.png', largura: 172, opacidade: .88,
         filtro: 'hue-rotate(55deg) saturate(.9) brightness(.9)',
+        deslocamentoX: -4, deslocamentoRankY: 42, proporcaoY: .72, limiteY: 650,
+        transformacao: 'translate(-36%,-50%) rotate(-7deg)'
+      }
+    },
+    'baile-mascaras': {
+      superior: {
+        imagem: 'https://i.imgur.com/QfInJtj.png', largura: 360, opacidade: .72,
+        filtro: 'grayscale(1) saturate(.15) brightness(.82) contrast(1.08)',
+        deslocamentoX: -330, deslocamentoY: 18, transformacao: 'translate(30%,-19%)'
+      },
+      lateral: {
+        imagem: 'https://i.imgur.com/UqTfoT5.png', largura: 172, opacidade: .88,
+        filtro: 'grayscale(1) saturate(.15) brightness(.88) contrast(1.08)',
         deslocamentoX: -4, deslocamentoRankY: 42, proporcaoY: .72, limiteY: 650,
         transformacao: 'translate(-36%,-50%) rotate(-7deg)'
       }
@@ -305,11 +333,12 @@
   }
 
   function encontrarDecoracaoPagina() {
-    var marcadorMotor = document.querySelector('.arcane-mini-evento[data-evento],.arcane-evento-estrelas,.arcane-evento-tempestade');
+    var marcadorMotor = document.querySelector('.arcane-mini-evento[data-evento],#arcane-baile-preview,.arcane-evento-estrelas,.arcane-evento-tempestade');
     var idMotor = marcadorMotor && marcadorMotor.getAttribute('data-evento');
     if (!idMotor && marcadorMotor) {
       if (marcadorMotor.classList.contains('arcane-evento-estrelas')) idMotor = 'chuva-estrelas';
       if (marcadorMotor.classList.contains('arcane-evento-tempestade')) idMotor = 'tempestade-magica';
+      if (marcadorMotor.id === 'arcane-baile-preview') idMotor = 'baile-mascaras';
     }
     if (DECORACOES_PAGINA[idMotor]) return { id: idMotor, config: DECORACOES_PAGINA[idMotor], marcador: marcadorMotor };
     var ehBlecaute = /(?:^|\/)t55(?:-|$)/i.test(location.pathname) ||
@@ -402,12 +431,13 @@
       try { sessionStorage.removeItem('arcaneMiniEventoAtual'); } catch (erro) {}
       return null;
     }
-    var marcador = document.querySelector('.arcane-mini-evento[data-evento],.arcane-evento-estrelas,.arcane-evento-tempestade,.arcane-evento-blecaute,#arcane-blecaute-abertura');
+    var marcador = document.querySelector('.arcane-mini-evento[data-evento],#arcane-baile-preview,.arcane-evento-estrelas,.arcane-evento-tempestade,.arcane-evento-blecaute,#arcane-blecaute-abertura');
     var idMarcador = marcador && marcador.getAttribute('data-evento');
     if (!idMarcador && marcador) {
       if (marcador.classList.contains('arcane-evento-estrelas')) idMarcador = 'chuva-estrelas';
       if (marcador.classList.contains('arcane-evento-tempestade')) idMarcador = 'tempestade-magica';
       if (marcador.classList.contains('arcane-evento-blecaute') || marcador.id === 'arcane-blecaute-abertura') idMarcador = 'blecaute';
+      if (marcador.id === 'arcane-baile-preview') idMarcador = 'baile-mascaras';
     }
     if (marcador && EVENTOS[idMarcador]) {
       try { sessionStorage.setItem('arcaneMiniEventoAtual', idMarcador); } catch (erro) {}
@@ -415,11 +445,13 @@
     }
     var mensagem = document.querySelector('textarea[name="message"]');
     var valor = mensagem ? mensagem.value : '';
-    var achado = valor.match(/data-evento=["'](blecaute|chuva-estrelas|tempestade-magica)["']/i);
+    var achado = valor.match(/data-evento=["'](blecaute|chuva-estrelas|tempestade-magica|baile-mascaras)["']/i);
     if (achado) return { id: achado[1].toLowerCase(), config: EVENTOS[achado[1].toLowerCase()], marcador: null };
     if (/arcane-blecaute-(?:rp|atualizacao)|<texto-(?:blecaute|atualizacao)>/i.test(valor)) return { id: 'blecaute', config: EVENTOS.blecaute, marcador: null };
+    if (/arcane-baile-preview|arcane-me-(?:rp|update)[^>]*\bbaile\b/i.test(valor)) return { id: 'baile-mascaras', config: EVENTOS['baile-mascaras'], marcador: null };
     var campoTopico = document.querySelector('form#quick_reply input[name="t"],form[name="post"] input[name="t"]');
     if ((campoTopico && campoTopico.value === '55') || /(?:^|\/)t55(?:-|$)/i.test(location.pathname)) return { id: 'blecaute', config: EVENTOS.blecaute, marcador: marcador || null };
+    if ((campoTopico && campoTopico.value === '66') || /(?:^|\/)t66(?:-|$)/i.test(location.pathname)) return { id: 'baile-mascaras', config: EVENTOS['baile-mascaras'], marcador: marcador || null };
     if (/\/post(?:$|[?#])/i.test(location.pathname)) {
       try {
         var lembrado = sessionStorage.getItem('arcaneMiniEventoAtual');
@@ -475,6 +507,7 @@
   }
 
   instalarCSSSeguro('arcane-me-narrador-temas-css', '.arcane-me-narracao-tempestade #rpost-header .poster-name,.arcane-me-narracao-tempestade #rpost-header .poster-name>*{color:#9d63ff!important}.arcane-me-narracao-tempestade #rpost-header:before,.arcane-me-narracao-tempestade>.inner>.postprofile>.rrank:before{background-color:#6c4d9e!important}.arcane-me-narracao-blecaute #rpost-header .poster-name,.arcane-me-narracao-blecaute #rpost-header .poster-name>*{color:#5f88a2!important;text-shadow:0 0 12px rgba(121,169,204,.16)!important}.arcane-me-narracao-blecaute #rpost-header:before,.arcane-me-narracao-blecaute>.inner>.postprofile>.rrank:before{background-color:#47728d!important}.arcane-me-narracao-blecaute>.inner>.postprofile>.rrank,.arcane-me-narracao-blecaute>.inner>.postprofile>.rrank>*{color:#9bc9e8!important}');
+  instalarCSSSeguro('arcane-me-baile-tema-css', 'html.arcane-evento-baile-mascaras .arcane-me-narracao-baile #rpost-header .poster-name,html.arcane-evento-baile-mascaras .arcane-me-narracao-baile #rpost-header .poster-name>*{color:#c9c3b5!important;text-shadow:0 0 12px rgba(238,233,223,.14)!important}html.arcane-evento-baile-mascaras .arcane-me-narracao-baile #rpost-header:before,html.arcane-evento-baile-mascaras .arcane-me-narracao-baile>.inner>.postprofile>.rrank:before{background-color:#5e5a52!important}html.arcane-evento-baile-mascaras .arcane-me-narracao-baile>.inner>.postprofile>.rrank,html.arcane-evento-baile-mascaras .arcane-me-narracao-baile>.inner>.postprofile>.rrank>*{color:#eee9df!important}html.arcane-baile-rubra .arcane-me-narracao-baile #rpost-header .poster-name,html.arcane-baile-rubra .arcane-me-narracao-baile #rpost-header .poster-name>*,html.arcane-baile-rubra .arcane-me-narracao-baile>.inner>.postprofile>.rrank,html.arcane-baile-rubra .arcane-me-narracao-baile>.inner>.postprofile>.rrank>*{color:#e22a2a!important;text-shadow:0 0 12px rgba(190,0,0,.28)!important}html.arcane-baile-rubra .arcane-me-narracao-baile #rpost-header:before,html.arcane-baile-rubra .arcane-me-narracao-baile>.inner>.postprofile>.rrank:before{background-color:#731818!important}html.arcane-baile-rubra .arcane-me-form,html.arcane-baile-rubra .arcane-me-pagina{--arcane-cor:#e22a2a!important;--arcane-cor2:#f0d9d4!important;--arcane-cor3:#8f2424!important;--arcane-linha:#731818!important;--arcane-fundo:#100404!important;--arcane-corpo:#160707!important}html.arcane-baile-rubra #arcane-me-decoracao-pagina .arcane-me-adorno{filter:sepia(1) saturate(4) hue-rotate(320deg) brightness(.58) contrast(1.18)!important}html.arcane-baile-rubra .arcane-me-rp.baile,html.arcane-baile-rubra .arcane-me-update.baile{--me-cor:#e22a2a!important;--me-cor2:#f0d9d4!important;--me-cor3:#8f2424!important;--me-linha:#731818!important;--me-fundo:#100404!important;--me-corpo:#160707!important;--mu-cor:#e22a2a!important;--mu-cor2:#f0d9d4!important;--mu-cor3:#8f2424!important;--mu-linha:#731818!important;--mu-fundo:#100404!important;--mu-corpo:#160707!important}');
   instalarCSSSeguro('arcane-me-tempestade-imagens-css', '#arcane-tempestade-abertura .at-header{background-color:#07070d!important;background-image:linear-gradient(90deg,rgba(5,5,11,.82) 0%,rgba(8,8,20,.60) 32%,rgba(16,12,35,.30) 62%,rgba(32,17,52,.12) 100%),linear-gradient(0deg,rgba(5,5,10,.38) 0%,rgba(8,8,17,.06) 54%,transparent 100%),radial-gradient(ellipse at 64% 47%,rgba(157,99,255,.20) 0%,rgba(96,72,189,.07) 29%,transparent 57%),url("https://i.pinimg.com/736x/c6/bf/46/c6bf46cf522fdbf26329bd0895bbadc0.jpg")!important;background-position:center,center,center,center 50%!important;background-size:cover,cover,cover,cover!important;background-repeat:no-repeat!important}#arcane-tempestade-abertura .at-header:before{background:radial-gradient(ellipse at 62% 48%,rgba(225,213,255,.20) 0%,rgba(157,99,255,.075) 22%,transparent 49%),radial-gradient(ellipse at 78% 61%,rgba(210,92,255,.055) 0%,transparent 38%)!important;mix-blend-mode:screen!important}.arcane-me-rp.tempestade.visual-header .me-topo{background-image:linear-gradient(90deg,rgba(5,5,11,.80) 0%,rgba(8,8,19,.55) 27%,rgba(13,10,27,.25) 58%,rgba(31,14,48,.08) 100%),linear-gradient(0deg,rgba(5,5,10,.30) 0%,rgba(8,8,17,.04) 58%,transparent 100%),url("https://i.pinimg.com/736x/c6/bf/46/c6bf46cf522fdbf26329bd0895bbadc0.jpg")!important}.arcane-me-rp.tempestade.visual-header .me-topo:before{background:radial-gradient(ellipse at 66% 48%,rgba(224,213,255,.18) 0%,rgba(157,99,255,.065) 24%,transparent 51%),radial-gradient(ellipse at 82% 46%,rgba(210,92,255,.05) 0%,transparent 42%)!important}.arcane-me-update.tempestade .mu-header:before{background:linear-gradient(90deg,rgba(7,3,13,.78) 0%,rgba(31,17,55,.38) 53%,rgba(8,4,15,.66) 100%)!important}.arcane-me-update.tempestade .mu-header:after{opacity:.09!important}');
   instalarCSSSeguro('arcane-me-tempestade-tipografia-css', 'html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-texto p{font-family:Poppins,Arial,sans-serif!important;font-size:13.2px!important;font-weight:400!important;line-height:1.4!important}');
   instalarCSSSeguro('arcane-me-tempestade-carga-css', 'html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-caixa{animation:arcane-borda-abertura 9.7s ease-in-out -2.1s infinite!important}html.arcane-evento-tempestade-magica .arcane-me-rp.tempestade .me-caixa{animation:arcane-borda-post 11.3s ease-in-out -6.4s infinite!important}html.arcane-evento-tempestade-magica .arcane-me-update.tempestade{animation:arcane-borda-update 13.1s ease-in-out -8.8s infinite!important}@keyframes arcane-borda-abertura{0%,38%,43%,100%{box-shadow:0 0 0 rgba(157,99,255,0)}39%{box-shadow:0 0 4px rgba(240,238,245,.42),0 0 13px rgba(157,99,255,.36)}40%{box-shadow:0 0 1px rgba(157,99,255,.10)}41%{box-shadow:0 0 6px rgba(240,238,245,.52),0 0 18px rgba(157,99,255,.42)}}@keyframes arcane-borda-post{0%,57%,61%,100%{box-shadow:0 0 0 rgba(157,99,255,0)}58%{box-shadow:0 0 4px rgba(240,238,245,.38),0 0 11px rgba(157,99,255,.32)}59%{box-shadow:0 0 1px rgba(157,99,255,.08)}60%{box-shadow:0 0 5px rgba(201,167,255,.44),0 0 15px rgba(157,99,255,.35)}}@keyframes arcane-borda-update{0%,71%,75%,100%{filter:none}72%{filter:drop-shadow(0 0 4px rgba(240,238,245,.34)) drop-shadow(0 0 10px rgba(157,99,255,.28))}73%{filter:none}74%{filter:drop-shadow(0 0 5px rgba(201,167,255,.38)) drop-shadow(0 0 14px rgba(157,99,255,.30))}}html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-header:before{animation:arcane-raio-foto 8.9s ease-in-out -3.2s infinite!important}html.arcane-evento-tempestade-magica .arcane-me-rp.tempestade.visual-header .me-topo:before{animation:arcane-raio-foto 10.7s ease-in-out -7.1s infinite!important}html.arcane-evento-tempestade-magica .arcane-me-update.tempestade .mu-header:after{animation:arcane-raio-adm 12.4s ease-in-out -9.6s infinite!important}@keyframes arcane-raio-foto{0%,44%,48%,100%{opacity:.55}45%{opacity:1}46%{opacity:.42}47%{opacity:.9}}@keyframes arcane-raio-adm{0%,62%,66%,100%{opacity:.05;background:radial-gradient(ellipse at 68% 49%,rgba(240,238,245,.08),transparent 40%)}63%{opacity:.38;background:radial-gradient(ellipse at 68% 49%,rgba(240,238,245,.42),rgba(157,99,255,.16) 20%,transparent 44%)}64%{opacity:.04}65%{opacity:.28;background:radial-gradient(ellipse at 68% 49%,rgba(240,238,245,.34),rgba(157,99,255,.12) 22%,transparent 45%)}}html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-texto:before,html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-texto:after,html.arcane-evento-tempestade-magica .arcane-me-rp.tempestade .me-corpo:before,html.arcane-evento-tempestade-magica .arcane-me-rp.tempestade .me-corpo:after,html.arcane-evento-tempestade-magica .arcane-me-update.tempestade texto-update:before,html.arcane-evento-tempestade-magica .arcane-me-update.tempestade texto-update:after{content:"ᚦ\\A ᛉ\\A ᚱ\\A ᛇ\\A ᛟ";position:absolute;z-index:1;top:25px;width:20px;color:rgba(201,167,255,.22);font:400 11px/2.65 Georgia,serif;white-space:pre;text-align:center;text-shadow:0 0 6px rgba(157,99,255,.28);pointer-events:none}html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-texto:before,html.arcane-evento-tempestade-magica .arcane-me-rp.tempestade .me-corpo:before,html.arcane-evento-tempestade-magica .arcane-me-update.tempestade texto-update:before{left:3px}html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-texto:after,html.arcane-evento-tempestade-magica .arcane-me-rp.tempestade .me-corpo:after,html.arcane-evento-tempestade-magica .arcane-me-update.tempestade texto-update:after{right:3px;transform:scaleX(-1)}html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-texto p,html.arcane-evento-tempestade-magica .arcane-me-rp.tempestade .me-corpo texto-evento,html.arcane-evento-tempestade-magica .arcane-me-update.tempestade texto-update{position:relative;z-index:2}html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-status{font-size:0!important}html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-status:after{content:"CARGA INSTÁVEL";font-size:8px;letter-spacing:1.4px}html.arcane-evento-tempestade-magica .arcane-me-rp.tempestade texto-evento:after,html.arcane-evento-tempestade-magica .arcane-me-update.tempestade .mu-transition:after{content:"⚡  CARGA INSTÁVEL   ▰ ▰ ▰ ▰ ▰";display:block;margin-top:27px;padding-top:13px;border-top:1px solid rgba(157,99,255,.18);color:#c9a7ff;font:600 8px/1 Montserrat,Arial,sans-serif;letter-spacing:1.25px;text-align:right}html.arcane-evento-tempestade-magica .arcane-me-update.tempestade .mu-transition:after{position:absolute;top:auto;right:43px;bottom:-704px;width:250px}@media(prefers-reduced-motion:reduce){html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-caixa,html.arcane-evento-tempestade-magica .arcane-me-rp.tempestade .me-caixa,html.arcane-evento-tempestade-magica .arcane-me-update.tempestade,html.arcane-evento-tempestade-magica #arcane-tempestade-abertura .at-header:before,html.arcane-evento-tempestade-magica .arcane-me-rp.tempestade.visual-header .me-topo:before,html.arcane-evento-tempestade-magica .arcane-me-update.tempestade .mu-header:after{animation:none!important}}');
@@ -513,6 +546,8 @@
   instalarCSSSeguro('arcane-me-chuva-estrelas-update-lados-espelhados-v65-css', 'html.arcane-evento-chuva-estrelas .arcane-me-update.chuva .mu-body:before{top:-18px!important;bottom:0!important;background-color:var(--mu-fundo)!important;box-shadow:none!important;-webkit-mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.20) 5px,rgba(0,0,0,.70) 13px,#000 22px,#000 70%,rgba(0,0,0,.72) 83%,rgba(0,0,0,.25) 95%,transparent 100%)!important;mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.20) 5px,rgba(0,0,0,.70) 13px,#000 22px,#000 70%,rgba(0,0,0,.72) 83%,rgba(0,0,0,.25) 95%,transparent 100%)!important}');
   /* V66: gradiente real sob o SVG, sem transparência ou sombra tentando imitar a emenda. */
   instalarCSSSeguro('arcane-me-chuva-estrelas-update-gradiente-real-v66-css', 'html.arcane-evento-chuva-estrelas .arcane-me-update.chuva .mu-body:before{top:0!important;bottom:0!important;background-color:transparent!important;background-image:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2722%27 height=%27184%27 viewBox=%270 0 22 184%27%3E%3Cg%3E%3Cpath fill=%27%23ddcdf7%27 d=%27M11 5l1.25 4.75L17 11l-4.75 1.25L11 17l-1.25-4.75L5 11l4.75-1.25z%27/%3E%3Cpath fill=%27%23e6c77a%27 d=%27M7 35l.7 2.3L10 38l-2.3.7L7 41l-.7-2.3L4 38l2.3-.7z%27/%3E%3Cpath fill=%27%23ffffff%27 d=%27M15 59l.9 3.1L19 63l-3.1.9L15 67l-.9-3.1L11 63l3.1-.9z%27/%3E%3Cpath fill=%27%23c0a3ef%27 d=%27M8 87l1.1 3.9L13 92l-3.9 1.1L8 97l-1.1-3.9L3 92l3.9-1.1z%27/%3E%3Cpath fill=%27%23e6c77a%27 d=%27M15 120l.65 2.35L18 123l-2.35.65L15 126l-.65-2.35L12 123l2.35-.65z%27/%3E%3Cpath fill=%27%23ddcdf7%27 d=%27M7 147l.9 3.1L11 151l-3.1.9L7 155l-.9-3.1L3 151l3.1-.9z%27/%3E%3Cpath fill=%27%23ffffff%27 d=%27M16 174l.55 1.95L18.5 176.5l-1.95.55L16 179l-.55-1.95-1.95-.55 1.95-.55z%27/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(180deg,#020104 0px,#020104 8px,#050309 26px,#09060f 48px,#0d0913 74px,#0d0913 100%)!important;background-position:center top,left top!important;background-size:18px 184px,100% 100%!important;background-repeat:repeat-y,no-repeat!important;box-shadow:none!important;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 72%,rgba(0,0,0,.68) 85%,rgba(0,0,0,.22) 96%,transparent 100%)!important;mask-image:linear-gradient(180deg,#000 0%,#000 72%,rgba(0,0,0,.68) 85%,rgba(0,0,0,.22) 96%,transparent 100%)!important}');
+
+  instalarCSSSeguro('arcane-me-baile-rubra-complemento-css', 'html.arcane-baile-rubra .arcane-me-form:before,html.arcane-baile-rubra .arcane-me-form:after{filter:sepia(1) saturate(4) hue-rotate(320deg) brightness(.58) contrast(1.18)!important}html.arcane-baile-rubra .arcane-me-rp.baile .me-topo:after,html.arcane-baile-rubra .arcane-me-rp.baile .me-lateral:after,html.arcane-baile-rubra .arcane-me-update.baile .mu-header:after{content:""!important;position:absolute!important;inset:0!important;display:block!important;background:rgba(82,0,0,.52)!important;mix-blend-mode:multiply!important;pointer-events:none!important}');
 
   function ativarCSSAbertura(e) {
     if (!e || !e.marcador) return;
@@ -901,8 +936,25 @@
     document.documentElement.classList.add('arcane-me-identidade-verificada');
   }
 
+  function sincronizarFaseBaile(e) {
+    if (!e || e.id !== 'baile-mascaras') return;
+    var marcador = e.marcador || document.getElementById('arcane-baile-preview');
+    var controle = marcador && marcador.querySelector('#ab-rubra');
+    function atualizar() {
+      var rubra = !!(controle && controle.checked);
+      document.documentElement.classList.toggle('arcane-baile-rubra', rubra);
+      document.documentElement.classList.toggle('arcane-baile-prata', !rubra);
+    }
+    atualizar();
+    if (controle && !controle.__arcaneFaseLigada) {
+      controle.__arcaneFaseLigada = true;
+      controle.addEventListener('change', atualizar);
+    }
+  }
+
   function preparar() {
     var e = encontrarEvento();
+    sincronizarFaseBaile(e);
     /* O layout precisa ser reduzido antes de calcular a posição dos adornos. */
     aplicarModoImersivo(e);
     aplicarDecoracoesPagina();
@@ -1031,7 +1083,8 @@
   var EVENTOS = [
     { id: 'blecaute', nome: 'Blecaute em Hogwarts', titulo: 'Blecaute em Hogwarts', modeloPost: '309' },
     { id: 'chuva-estrelas', nome: 'Chuva de Estrelas Cadentes', titulo: 'Chuva de Estrelas Cadentes', modeloPost: '314' },
-    { id: 'tempestade-magica', nome: 'Tempestade Mágica', titulo: 'Tempestade Mágica', modeloPost: '322' }
+    { id: 'tempestade-magica', nome: 'Tempestade Mágica', titulo: 'Tempestade Mágica', modeloPost: '322' },
+    { id: 'baile-mascaras', nome: 'Baile de Máscaras', titulo: 'Baile de Máscaras', modeloPost: '338' }
   ];
   var estadoServidorSincronizado = false;
 
@@ -1521,7 +1574,7 @@
     estilo.textContent = '#arcane-mini-eventos-admin{position:absolute;z-index:99999;left:calc(100% + 4px);top:calc(100% + 10px);width:360px;padding:0;border:1px solid #29302b;border-top:2px solid #8e7a36;background:rgba(5,8,7,.97);box-shadow:0 14px 32px rgba(0,0,0,.58);color:#c9cbc9;font:11px/1.45 Poppins,Arial,sans-serif;backdrop-filter:blur(8px);opacity:0;visibility:hidden;pointer-events:none;transform:translateX(-8px);transition:opacity .18s ease,transform .18s ease,visibility .18s}#arcane-mini-eventos-admin:before{content:"";position:absolute;left:-7px;top:13px;width:12px;height:12px;border-left:1px solid #29302b;border-bottom:1px solid #29302b;background:#070a08;transform:rotate(45deg)}#arcane-mini-eventos-admin.arcane-admin-aberto{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(0)}#arcane-mini-eventos-admin *{box-sizing:border-box}.arcane-admin-titulo{position:relative;padding:14px 44px 12px 14px;border-bottom:1px solid #1d231f;color:#b79d4d;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase}.arcane-admin-titulo span{margin-right:6px}.arcane-admin-fechar{position:absolute;top:9px;right:12px;width:27px;height:27px;padding:0;border:1px solid #36382b;background:#0d100e;color:#a8914c;font:700 13px/1 Arial,sans-serif;cursor:pointer}.arcane-admin-fechar:hover{border-color:#8e7a36;color:#ddc56d}.arcane-admin-status{min-height:78px;padding:17px 14px;color:#a7aaa7}.arcane-admin-status b{display:block;margin-bottom:5px;color:#e0e1df}.arcane-admin-status a{display:block;margin-top:7px;color:#6d9d65!important;font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase}.arcane-admin-acoes{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:11px 12px;border-top:1px solid #1d231f}.arcane-admin-acoes button{min-height:32px;border:1px solid #514a2d;background:#111410;color:#b79d4d;font:700 9px Poppins,Arial,sans-serif;letter-spacing:.65px;text-transform:uppercase;cursor:pointer}.arcane-admin-acoes button:hover{border-color:#a68e40;background:#9a843a;color:#090a09}.arcane-admin-acoes button.perigo{grid-column:1/-1;border-color:#554039;color:#b98978}.arcane-admin-acoes button.perigo:hover{border-color:#9a6250;background:#6e4033;color:#fff}.arcane-admin-acoes button:disabled{cursor:not-allowed;opacity:.32}#arcane-eventos-acionador{position:absolute;left:50%;top:calc(100% + 10px);display:flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;transform:translateX(-50%);border:0!important;outline:0;background:transparent!important;box-shadow:none!important;color:#e2e3e1;font-size:20px;cursor:pointer;transition:color .16s ease,transform .16s ease}#arcane-eventos-acionador:hover,#arcane-eventos-acionador.arcane-eventos-acionador-ativo{color:#c2a84e;transform:translateX(-50%) scale(1.08)}#arcane-eventos-acionador:after{content:"MINI-EVENTOS";position:absolute;left:38px;top:50%;padding:5px 7px;transform:translate(4px,-50%);background:#080b09;border:1px solid #29302b;color:#b7b9b6;font:600 8px/1 Poppins,Arial,sans-serif;letter-spacing:.8px;white-space:nowrap;opacity:0;visibility:hidden;pointer-events:none;transition:.16s}#arcane-eventos-acionador:hover:after{opacity:1;visibility:visible;transform:translate(0,-50%)}';
     estilo.textContent += '#arcane-mini-eventos-admin{left:calc(100% + 15px);top:auto;bottom:-44px;border:1px solid rgba(49,49,49,.86);border-top:2px solid #7B6E3D;border-radius:0!important;background:rgba(0,4,3,.86);box-shadow:0 18px 45px rgba(0,0,0,.68),inset 0 0 0 1px rgba(185,158,89,.05)}#arcane-mini-eventos-admin:before{top:auto;bottom:14px;border-color:rgba(49,49,49,.86);background:rgba(0,4,3,.86)}#arcane-mini-eventos-admin button{border-radius:0!important}.arcane-admin-titulo{padding:12px 44px 10px 14px;border-bottom:1px solid rgba(49,49,49,.82);background:rgba(0,0,0,.46);color:#b99e59;font-size:15px}.arcane-admin-acoes{padding:10px 12px;border-top:0;border-bottom:1px solid rgba(49,49,49,.72);background:rgba(0,0,0,.2)}.arcane-admin-acoes button{min-height:30px;border-color:#313131;background:#101010;color:#b99e59;font:700 10px/1 Montserrat,Arial,sans-serif;letter-spacing:.08em}.arcane-admin-acoes button.primario:not(:disabled){border-color:#b99e59;background:#7B6E3D;color:#101010}.arcane-admin-acoes button.primario:not(:disabled):hover,.arcane-admin-acoes button:not(:disabled):hover{border-color:#538353;background:#244028;color:#d1d1d1}.arcane-admin-status{min-height:76px;padding:18px 14px;font-size:12px;background:rgba(0,0,0,.28)}.arcane-admin-status b{font-size:12px}.arcane-admin-rodape{display:flex;justify-content:flex-end;padding:10px 12px;border-top:1px solid rgba(49,49,49,.78);background:rgba(0,0,0,.38)}.arcane-admin-rodape button{min-width:164px;min-height:30px;border:1px solid #313131;background:#101010;color:#b99e59;font:700 10px/1 Montserrat,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}.arcane-admin-rodape button:not(:disabled):hover{border-color:#538353;background:#244028;color:#d1d1d1}.arcane-admin-rodape button:disabled{opacity:.45;cursor:not-allowed}.arcane-admin-fechar{display:flex;align-items:center;justify-content:center;width:26px;height:26px;padding:0;border-color:#313131;background:#101010;color:#b99e59;font-size:14px;line-height:1}.arcane-admin-fechar:hover{border-color:#7B6E3D;background:#7B6E3D;color:#101010}#arcane-eventos-acionador{border-radius:0!important}#arcane-eventos-acionador i{font-size:17px!important;line-height:1!important}';
     estilo.textContent += '.arcane-admin-prazo{display:block;margin-top:6px;color:#aaa;font-size:10px}.arcane-admin-prazo.abrir{color:#c4a957}.arcane-admin-prazo.encerrar-breve{color:#d5b86c}.arcane-admin-prazo.encerrar-atrasado{color:#d27868;font-weight:700}.arcane-admin-status small{display:block;margin-top:3px;color:#777;font-size:9px}.arcane-admin-rodape{gap:8px}.arcane-admin-rodape button{min-width:0;flex:1}#arcane-eventos-acionador:before{content:"";position:absolute;right:2px;top:2px;width:7px;height:7px;background:transparent;box-shadow:none;pointer-events:none}#arcane-eventos-acionador.arcane-lembrete-abrir:before{background:#c6a94f;box-shadow:0 0 7px rgba(198,169,79,.75);animation:arcane-lembrete-pulso 1.8s ease-in-out infinite}#arcane-eventos-acionador.arcane-lembrete-breve:before{background:#d5b86c;box-shadow:0 0 6px rgba(213,184,108,.65);animation:arcane-lembrete-pulso 2.4s ease-in-out infinite}#arcane-eventos-acionador.arcane-lembrete-atrasado:before{background:#c75d4e;box-shadow:0 0 8px rgba(199,93,78,.85);animation:arcane-lembrete-pulso 1.15s ease-in-out infinite}#arcane-eventos-acionador.arcane-lembrete-silenciado:before{width:5px;height:5px;opacity:.38;animation:none;box-shadow:none}@keyframes arcane-lembrete-pulso{0%,100%{opacity:.45;transform:scale(.72)}50%{opacity:1;transform:scale(1.12)}}#arcane-eventos-lembrete{position:absolute;z-index:99998;left:calc(100% + 15px);bottom:-34px;width:300px;padding:13px;border:1px solid rgba(49,49,49,.9);border-top:2px solid #7B6E3D;background:rgba(0,4,3,.94);box-shadow:0 16px 38px rgba(0,0,0,.68);color:#aaa;font:11px/1.5 Poppins,Arial,sans-serif}#arcane-eventos-lembrete b{display:block;margin-bottom:5px;color:#b99e59;font-size:12px;text-transform:uppercase}#arcane-eventos-lembrete span{display:block}#arcane-eventos-lembrete div{display:flex;gap:7px;margin-top:11px}#arcane-eventos-lembrete button{flex:1;min-height:28px;border:1px solid #313131;border-radius:0;background:#101010;color:#b99e59;font:700 8px/1 Montserrat,Arial,sans-serif;text-transform:uppercase;cursor:pointer}#arcane-eventos-lembrete button:hover{border-color:#7B6E3D;background:#7B6E3D;color:#101010}';
-    estilo.textContent += '@media (hover:none) and (pointer:coarse){#arcane-mini-eventos-admin:before{display:none!important}.arcane-admin-rodape{flex-wrap:wrap}.arcane-admin-rodape button{min-width:calc(50% - 4px)}#arcane-eventos-acionador:after{display:none}}@media(max-width:700px){#arcane-eventos-acionador{left:calc(100% + 10px)!important;top:50%!important;transform:translateY(-50%)!important}#arcane-eventos-acionador:hover,#arcane-eventos-acionador.arcane-eventos-acionador-ativo{transform:translateY(-50%) scale(1.08)!important}}';
+    estilo.textContent += '@media (hover:none) and (pointer:coarse){#arcane-mini-eventos-admin:before{display:none!important}.arcane-admin-rodape{flex-wrap:wrap}.arcane-admin-rodape button{min-width:calc(50% - 4px)}#arcane-eventos-acionador:after{display:none}#arcane-eventos-acionador{left:calc(100% + 10px)!important;top:50%!important;transform:translateY(-50%)!important}#arcane-eventos-acionador:hover,#arcane-eventos-acionador.arcane-eventos-acionador-ativo{transform:translateY(-50%) scale(1.08)!important}}@media(max-width:700px){#arcane-eventos-acionador{left:calc(100% + 10px)!important;top:50%!important;transform:translateY(-50%)!important}#arcane-eventos-acionador:hover,#arcane-eventos-acionador.arcane-eventos-acionador-ativo{transform:translateY(-50%) scale(1.08)!important}}';
     document.head.appendChild(estilo);
     painel = document.createElement('aside');
     painel.id = 'arcane-mini-eventos-admin';
@@ -1614,6 +1667,12 @@
       titulo: 'Tempestade Mágica',
       cor: '#9d63ff', rgb: '157,99,255',
       resumo: 'Uma tempestade carregada de magia alcançou Hogwarts. Relâmpagos encantados alteram o castelo e tornam cada novo clarão imprevisível.'
+    },
+    {
+      id: 'baile-mascaras',
+      titulo: 'Baile de Máscaras',
+      cor: '#c9c3b5', rgb: '201,195,181',
+      resumo: 'As portas do salão se abriram. Entre máscaras, música e promessas veladas, cada convidado escolhe o rosto que deseja mostrar.'
     }
   ];
 

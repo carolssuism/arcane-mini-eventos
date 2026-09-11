@@ -4,7 +4,7 @@
 (function (window) {
   'use strict';
   window.ArcaneMiniEventosTemas = {
-    versao: '0.1.0',
+    versao: '0.1.5',
     eventos: {
     'blecaute': {
       nome: 'Blecaute em Hogwarts',
@@ -57,6 +57,31 @@
       },
       imersao: { ativo: true, deslocamentoInicio: 10 }
     },
+    'baile-mascaras': {
+      nome: 'Baile de Máscaras',
+      classe: 'baile',
+      topico: '66',
+      cor: '#c9c3b5', cor2: '#eee9df', cor3: '#8f897d',
+      fundo: '#080908', corpo: '#101110', linha: '#5e5a52', texto: '#dedbd3',
+      cores: ['#777269', '#c9c3b5', '#eee9df', '#8f897d', '#dedbd3'],
+      etiqueta: 'Os sinos ainda não tocaram',
+      padraoTitulo: 'A ÚLTIMA DANÇA',
+      padraoSubtitulo: 'Toda máscara guarda uma verdade.',
+      atualizacao: {
+        etiqueta: 'Atualização da narração',
+        imagem: 'https://i.pinimg.com/1200x/aa/f1/77/aaf177566f87a33c76660484844f707c.jpg',
+        posicao: 'center 48%'
+      },
+      visuais: [
+        { valor: 'header', nome: 'Visual · Header' },
+        { valor: 'lateral', nome: 'Visual · Lateral' }
+      ],
+      decoracoes: {
+        superior: { imagem: 'https://i.imgur.com/UDF1ipN.png', largura: '380px', x: '-76px', y: '-116px', rotacao: '-90deg', opacidade: '.68', filtro: 'grayscale(1) saturate(.2) brightness(.94) contrast(1.08)' },
+        inferior: { imagem: 'https://i.imgur.com/UDF1ipN.png', largura: '340px', x: '-64px', y: '-112px', rotacao: '-90deg', opacidade: '.56', filtro: 'grayscale(1) saturate(.2) brightness(.88) contrast(1.08)' }
+      },
+      imersao: { ativo: true, deslocamentoInicio: 10 }
+    },
     'tempestade-magica': {
       nome: 'Tempestade Mágica',
       classe: 'tempestade',
@@ -93,6 +118,19 @@
       lateral: {
         imagem: 'https://i.imgur.com/UqTfoT5.png', largura: 172, opacidade: .88,
         filtro: 'hue-rotate(55deg) saturate(.9) brightness(.9)',
+        deslocamentoX: -4, deslocamentoRankY: 42, proporcaoY: .72, limiteY: 650,
+        transformacao: 'translate(-36%,-50%) rotate(-7deg)'
+      }
+    },
+    'baile-mascaras': {
+      superior: {
+        imagem: 'https://i.imgur.com/QfInJtj.png', largura: 360, opacidade: .72,
+        filtro: 'grayscale(1) saturate(.15) brightness(.82) contrast(1.08)',
+        deslocamentoX: -330, deslocamentoY: 18, transformacao: 'translate(30%,-19%)'
+      },
+      lateral: {
+        imagem: 'https://i.imgur.com/UqTfoT5.png', largura: 172, opacidade: .88,
+        filtro: 'grayscale(1) saturate(.15) brightness(.88) contrast(1.08)',
         deslocamentoX: -4, deslocamentoRankY: 42, proporcaoY: .72, limiteY: 650,
         transformacao: 'translate(-36%,-50%) rotate(-7deg)'
       }
