@@ -576,6 +576,8 @@
   /* Atualização da administração: fotografia tratada por multiply uniforme, sem gradiente. */
   instalarCSSSeguro('arcane-me-baile-update-multiply-css', 'html.arcane-evento-baile-mascaras .arcane-me-update.baile .mu-header{filter:none!important;background-color:#aaa79f!important;background-image:url("https://i.pinimg.com/1200x/aa/f1/77/aaf177566f87a33c76660484844f707c.jpg")!important;background-position:center 43%!important;background-size:cover!important;background-repeat:no-repeat!important;background-blend-mode:multiply!important}html.arcane-evento-baile-mascaras .arcane-me-update.baile .mu-header:before{background:rgba(8,8,8,.22)!important;mix-blend-mode:multiply!important}html.arcane-baile-rubra .arcane-me-update.baile .mu-header{filter:none!important;background-color:#741414!important;background-image:url("https://i.pinimg.com/1200x/aa/f1/77/aaf177566f87a33c76660484844f707c.jpg")!important;background-position:center 43%!important;background-size:cover!important;background-repeat:no-repeat!important;background-blend-mode:multiply!important}html.arcane-baile-rubra .arcane-me-update.baile .mu-header:before{background:rgba(35,0,0,.28)!important;mix-blend-mode:multiply!important}');
 
+  instalarCSSSeguro('arcane-me-baile-v018-fase-publicada-css', '#arcane-baile-preview .ab-controles label{cursor:default!important}html.arcane-evento-baile-mascaras:not(.arcane-baile-rubra) .arcane-me-update.baile .mu-header{filter:none!important;background-color:#777a7c!important;background-blend-mode:luminosity!important}html.arcane-evento-baile-mascaras:not(.arcane-baile-rubra) .arcane-me-update.baile .mu-header:before{background:rgba(5,6,6,.48)!important;mix-blend-mode:multiply!important}html.arcane-evento-baile-mascaras:not(.arcane-baile-rubra) .arcane-me-update.baile .mu-label{color:#dedbd3!important}html.arcane-evento-baile-mascaras:not(.arcane-baile-rubra) .arcane-me-update.baile .mu-title{color:#f3f0e9!important;text-shadow:0 2px 12px rgba(0,0,0,.72)!important}html.arcane-evento-baile-mascaras:not(.arcane-baile-rubra) .arcane-me-update.baile .mu-subtitle{color:#d0cec8!important;text-shadow:0 1px 8px rgba(0,0,0,.68)!important}');
+
   /* Os corvos enquadram o formulário pelos dois lados; o lado direito é espelhado. */
   instalarCSSSeguro('arcane-me-baile-update-prata-fix-css', 'html.arcane-evento-baile-mascaras:not(.arcane-baile-rubra) .arcane-me-update.baile .mu-header{filter:grayscale(1) brightness(.68) contrast(1.14)!important;background-color:#bfc1c3!important;background-blend-mode:multiply!important}html.arcane-evento-baile-mascaras:not(.arcane-baile-rubra) .arcane-me-update.baile .mu-header:before{background:rgba(12,13,14,.18)!important;mix-blend-mode:multiply!important}');
 
@@ -1035,7 +1037,15 @@
     ];
     function atualizar() {
       var rubraPublicada = !!document.querySelector('.arcane-baile-fase-rubra');
-      var rubra = rubraPublicada || !!(controle && controle.checked);
+      var rubra = rubraPublicada;
+      /* O controle legado da abertura agora é somente um indicador visual. A
+         fase nasce prateada e só muda quando uma atualização do ADM publica o
+         marcador persistente da Morte Rubra. */
+      if (controle) {
+        controle.checked = rubra;
+        controle.disabled = true;
+        controle.setAttribute('aria-disabled', 'true');
+      }
       document.documentElement.classList.toggle('arcane-baile-rubra', rubra);
       document.documentElement.classList.toggle('arcane-baile-prata', !rubra);
       var caixaNarrativa = marcador && marcador.querySelector('.ab-texto');
@@ -1060,10 +1070,6 @@
       });
     }
     atualizar();
-    if (controle && !controle.__arcaneFaseLigada) {
-      controle.__arcaneFaseLigada = true;
-      controle.addEventListener('change', atualizar);
-    }
   }
 
   function preparar() {
