@@ -4,7 +4,7 @@
 (function (window) {
   'use strict';
   window.ArcaneMiniEventosTemas = {
-    versao: '0.1.8',
+    versao: '0.1.9',
     eventos: {
     'blecaute': {
       nome: 'Blecaute em Hogwarts',
@@ -77,8 +77,8 @@
         { valor: 'lateral', nome: 'Visual · Lateral' }
       ],
       decoracoes: {
-        superior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.8/corvos-romas.png', largura: '350px', x: '-116px', y: '-154px', rotacao: '0deg', opacidade: '.62', filtro: 'grayscale(1) saturate(.12) brightness(.76) contrast(1.12)' },
-        inferior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.8/corvos-romas.png', largura: '350px', x: '-108px', y: '-150px', rotacao: '0deg', opacidade: '.58', filtro: 'grayscale(1) saturate(.12) brightness(.72) contrast(1.12)' }
+        superior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/corvos-romas.png', largura: '350px', x: '-70px', y: '-94px', rotacao: '0deg', opacidade: '.62', filtro: 'grayscale(1) saturate(.12) brightness(.76) contrast(1.12)' },
+        inferior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/corvos-romas.png', largura: '350px', x: '-62px', y: '-82px', rotacao: '0deg', opacidade: '.58', filtro: 'grayscale(1) saturate(.12) brightness(.72) contrast(1.12)' }
       },
       imersao: { ativo: true, deslocamentoInicio: 10 }
     },
@@ -124,15 +124,15 @@
     },
     'baile-mascaras': {
       superior: {
-        imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.8/borboleta-joia-negra.png', largura: 300, opacidade: .76,
+        imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/borboleta-joia-negra.png', largura: 300, opacidade: .76,
         filtro: 'grayscale(1) saturate(.12) brightness(.78) contrast(1.12)',
         deslocamentoX: -270, deslocamentoY: 10, transformacao: 'translate(30%,-16%) rotate(-4deg)'
       },
       lateral: {
-        imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.8/mascaras-teatrais-prata.png', largura: 196, opacidade: .88,
+        imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/mariposa-caveira.png', largura: 176, opacidade: .88,
         filtro: 'grayscale(1) saturate(.12) brightness(.84) contrast(1.1)',
-        deslocamentoX: -4, deslocamentoRankY: 70, proporcaoY: .72, limiteY: 650,
-        transformacao: 'translate(-39%,-50%) rotate(-5deg)'
+        deslocamentoX: -4, deslocamentoRankY: 24, proporcaoY: .72, limiteY: 650,
+        transformacao: 'translate(-39%,-50%) rotate(-8deg)'
       }
     },
     'tempestade-magica': {
