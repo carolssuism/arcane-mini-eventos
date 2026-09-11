@@ -7,7 +7,7 @@
   if (window.__ARCANE_MINI_EVENTOS_LOADER__) return;
   window.__ARCANE_MINI_EVENTOS_LOADER__ = true;
 
-  var BASE = 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.0/';
+  var BASE = 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.1/';
   var TIMEOUT = 12000;
 
   function url(arquivo) {

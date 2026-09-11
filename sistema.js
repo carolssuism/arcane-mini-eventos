@@ -1,6 +1,5 @@
-/* ARCANE · MINI-EVENTOS · SISTEMA EXTERNO · COMPATIBILIDADE V1
-   Baseline: Motor V68 + Painel V12 + Mural V7.
-   Os módulos permanecem isolados para evitar alteração de comportamento. */
+/* ARCANE · MINI-EVENTOS · SISTEMA EXTERNO · V0.1.1
+   Motor V68 + Painel V14 + Mural V7. */
 (function (window) {
   'use strict';
   if (window.__ARCANE_MINI_EVENTOS_SISTEMA_V1__) return;
@@ -1011,7 +1010,7 @@
 })();
 
 
-/* ARCANE · PAINEL ADMINISTRATIVO DOS MINI-EVENTOS · V12
+/* ARCANE · PAINEL ADMINISTRATIVO DOS MINI-EVENTOS · V14
    Ciclo administrativo: 30 dias de evento, encerramento e 15 dias de descanso.
    Publica em Libertatem (f3) e arquiva em Arquivos (f4).
 */
@@ -1034,6 +1033,7 @@
     { id: 'chuva-estrelas', nome: 'Chuva de Estrelas Cadentes', titulo: 'Chuva de Estrelas Cadentes', modeloPost: '314' },
     { id: 'tempestade-magica', nome: 'Tempestade Mágica', titulo: 'Tempestade Mágica', modeloPost: '322' }
   ];
+  var estadoServidorSincronizado = false;
 
   function lerEstado() {
     try { return JSON.parse(localStorage.getItem(CHAVE) || '{}') || {}; }
@@ -1137,6 +1137,68 @@
     }).filter(Boolean).filter(function (topico, indice, todos) {
       return todos.findIndex(function (item) { return item.id === topico.id; }) === indice;
     }).sort(function (a, b) { return Number(b.id) - Number(a.id); });
+  }
+
+  async function localizarEventoNoForum(forumId) {
+    var candidatos = [];
+    for (var i = 0; i < EVENTOS.length; i += 1) {
+      var topicos = await listarTopicos(forumId, EVENTOS[i].titulo);
+      for (var j = 0; j < topicos.length; j += 1) {
+        candidatos.push({ evento: EVENTOS[i], topico: topicos[j] });
+      }
+    }
+    candidatos.sort(function (a, b) { return Number(b.topico.id) - Number(a.topico.id); });
+
+    for (var c = 0; c < candidatos.length; c += 1) {
+      try {
+        var pagina = await obterDocumento('/t' + candidatos[c].topico.id + '-');
+        var marcador = pagina.doc.querySelector(
+          '.arcane-mini-evento-estado[data-evento-id="' + candidatos[c].evento.id + '"], ' +
+          '[data-evento-id="' + candidatos[c].evento.id + '"][data-evento-fim]'
+        );
+        if (!marcador) continue;
+        var inicio = marcador.getAttribute('data-evento-inicio') || '';
+        var fim = marcador.getAttribute('data-evento-fim') || '';
+        if (!Number.isFinite(Date.parse(fim))) continue;
+        return {
+          evento: candidatos[c].evento.id,
+          topico: candidatos[c].topico.id,
+          url: candidatos[c].topico.url,
+          criadoEm: inicio,
+          terminaEm: fim
+        };
+      } catch (erro) {}
+    }
+    return null;
+  }
+
+  async function sincronizarEstadoDoForum() {
+    try {
+      var estado = lerEstado();
+      var ativoNoForum = await localizarEventoNoForum(FORUM_ATIVO);
+      if (ativoNoForum) {
+        estado.ativo = ativoNoForum;
+        estado.ultimoEvento = ativoNoForum.evento;
+      } else {
+        estado.ativo = null;
+        var ultimoArquivado = await localizarEventoNoForum(FORUM_ARQUIVO);
+        if (ultimoArquivado) {
+          estado.ultimoEvento = ultimoArquivado.evento;
+          if (!estado.ultimoEncerrado || String(estado.ultimoEncerrado.topico) !== String(ultimoArquivado.topico)) {
+            estado.ultimoEncerrado = {
+              evento: ultimoArquivado.evento,
+              topico: ultimoArquivado.topico,
+              encerradoEm: ultimoArquivado.terminaEm
+            };
+          }
+        }
+      }
+      localStorage.setItem(CHAVE, JSON.stringify(estado));
+    } catch (erro) {
+      /* Se a consulta falhar, preserva o estado local e mantém as ações bloqueadas. */
+      return false;
+    }
+    return true;
   }
 
   async function criarTopico(evento) {
@@ -1308,6 +1370,17 @@
     esconderLembrete();
   }
 
+  function liberarDescansoAgora() {
+    var estado = lerEstado();
+    if (estado.ativo) return alert('Encerre o evento ativo antes de alterar o descanso.');
+    if (situacaoAtual(estado).tipo !== 'descanso') return alert('Não existe um descanso em andamento.');
+    if (!confirm('Zerar o descanso atual e liberar um novo mini-evento agora?')) return;
+    estado.ultimoEncerrado.encerradoEm = new Date(Date.now() - DURACAO_DESCANSO).toISOString();
+    estado.descansoLiberadoManualmente = true;
+    delete estado.lembreteSilenciadoAte;
+    salvarEstado(estado);
+  }
+
   function esconderLembrete() {
     if (lembrete) lembrete.remove();
     lembrete = null;
@@ -1357,6 +1430,29 @@
     painel.classList.toggle('arcane-admin-aberto', aberto);
     acionador.classList.toggle('arcane-eventos-acionador-ativo', aberto);
     acionador.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+    if (aberto) ajustarPainelAoCelular();
+  }
+
+  function ajustarPainelAoCelular() {
+    if (!painel) return;
+    var visual = window.visualViewport;
+    var largura = visual ? visual.width : window.innerWidth;
+    var celular = largura < 700 || (window.matchMedia && window.matchMedia('(hover:none) and (pointer:coarse)').matches);
+    if (!celular) {
+      ['position', 'left', 'right', 'top', 'bottom', 'width', 'max-height', 'overflow-y'].forEach(function (propriedade) {
+        painel.style.removeProperty(propriedade);
+      });
+      return;
+    }
+    var margem = 10;
+    painel.style.setProperty('position', 'fixed', 'important');
+    painel.style.setProperty('left', ((visual ? visual.offsetLeft : 0) + margem) + 'px', 'important');
+    painel.style.setProperty('right', 'auto', 'important');
+    painel.style.setProperty('top', ((visual ? visual.offsetTop : 0) + 72) + 'px', 'important');
+    painel.style.setProperty('bottom', 'auto', 'important');
+    painel.style.setProperty('width', Math.max(280, largura - margem * 2) + 'px', 'important');
+    painel.style.setProperty('max-height', Math.max(260, (visual ? visual.height : window.innerHeight) - 92) + 'px', 'important');
+    painel.style.setProperty('overflow-y', 'auto', 'important');
   }
 
   function ocupar(texto) {
@@ -1394,20 +1490,23 @@
     var ativo = estado.ativo && eventoPorId(estado.ativo.evento);
     var situacao = situacaoAtual(estado);
     var emDescanso = situacao.tipo === 'descanso';
+    var sincronizando = !estadoServidorSincronizado;
     painel.innerHTML =
       '<div class="arcane-admin-titulo"><span>✦</span> Mini-eventos<button type="button" class="arcane-admin-fechar" aria-label="Fechar painel">×</button></div>' +
       '<div class="arcane-admin-acoes">' +
-        '<button type="button" class="primario" data-acao="sortear"' + (ativo || emDescanso ? ' disabled' : '') + '>Sortear tema</button>' +
-        '<button type="button" data-acao="criar"' + (!sorteado || ativo || emDescanso ? ' disabled' : '') + '>Criar evento</button>' +
+        '<button type="button" class="primario" data-acao="sortear"' + (sincronizando || ativo || emDescanso ? ' disabled' : '') + '>Sortear tema</button>' +
+        '<button type="button" data-acao="criar"' + (sincronizando || !sorteado || ativo || emDescanso ? ' disabled' : '') + '>Criar evento</button>' +
       '</div>' +
       '<div class="arcane-admin-status">' +
-        htmlSituacao(estado, ativo, sorteado, situacao) +
+        (sincronizando ? '<b>Sincronizando eventos</b><span class="arcane-admin-prazo">Consultando o estado atual do fórum…</span>' : htmlSituacao(estado, ativo, sorteado, situacao)) +
       '</div>' +
       '<div class="arcane-admin-rodape">' +
         (situacao.exigeAcao && !situacao.silenciado ? '<button type="button" data-acao="lembrar">Lembrar em 24h</button>' : '') +
-        '<button type="button" class="perigo" data-acao="encerrar"' + (!ativo ? ' disabled' : '') + '>Encerrar evento</button>' +
+        (!sincronizando && !ativo && emDescanso ? '<button type="button" data-acao="liberar-descanso">Liberar agora</button>' : '') +
+        '<button type="button" class="perigo" data-acao="encerrar"' + (sincronizando || !ativo ? ' disabled' : '') + '>Encerrar evento</button>' +
       '</div>';
     atualizarIndicador(situacao);
+    if (painel.classList.contains('arcane-admin-aberto')) ajustarPainelAoCelular();
   }
 
   function instalar() {
@@ -1416,6 +1515,7 @@
     estilo.textContent = '#arcane-mini-eventos-admin{position:absolute;z-index:99999;left:calc(100% + 4px);top:calc(100% + 10px);width:360px;padding:0;border:1px solid #29302b;border-top:2px solid #8e7a36;background:rgba(5,8,7,.97);box-shadow:0 14px 32px rgba(0,0,0,.58);color:#c9cbc9;font:11px/1.45 Poppins,Arial,sans-serif;backdrop-filter:blur(8px);opacity:0;visibility:hidden;pointer-events:none;transform:translateX(-8px);transition:opacity .18s ease,transform .18s ease,visibility .18s}#arcane-mini-eventos-admin:before{content:"";position:absolute;left:-7px;top:13px;width:12px;height:12px;border-left:1px solid #29302b;border-bottom:1px solid #29302b;background:#070a08;transform:rotate(45deg)}#arcane-mini-eventos-admin.arcane-admin-aberto{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(0)}#arcane-mini-eventos-admin *{box-sizing:border-box}.arcane-admin-titulo{position:relative;padding:14px 44px 12px 14px;border-bottom:1px solid #1d231f;color:#b79d4d;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase}.arcane-admin-titulo span{margin-right:6px}.arcane-admin-fechar{position:absolute;top:9px;right:12px;width:27px;height:27px;padding:0;border:1px solid #36382b;background:#0d100e;color:#a8914c;font:700 13px/1 Arial,sans-serif;cursor:pointer}.arcane-admin-fechar:hover{border-color:#8e7a36;color:#ddc56d}.arcane-admin-status{min-height:78px;padding:17px 14px;color:#a7aaa7}.arcane-admin-status b{display:block;margin-bottom:5px;color:#e0e1df}.arcane-admin-status a{display:block;margin-top:7px;color:#6d9d65!important;font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase}.arcane-admin-acoes{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:11px 12px;border-top:1px solid #1d231f}.arcane-admin-acoes button{min-height:32px;border:1px solid #514a2d;background:#111410;color:#b79d4d;font:700 9px Poppins,Arial,sans-serif;letter-spacing:.65px;text-transform:uppercase;cursor:pointer}.arcane-admin-acoes button:hover{border-color:#a68e40;background:#9a843a;color:#090a09}.arcane-admin-acoes button.perigo{grid-column:1/-1;border-color:#554039;color:#b98978}.arcane-admin-acoes button.perigo:hover{border-color:#9a6250;background:#6e4033;color:#fff}.arcane-admin-acoes button:disabled{cursor:not-allowed;opacity:.32}#arcane-eventos-acionador{position:absolute;left:50%;top:calc(100% + 10px);display:flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;transform:translateX(-50%);border:0!important;outline:0;background:transparent!important;box-shadow:none!important;color:#e2e3e1;font-size:20px;cursor:pointer;transition:color .16s ease,transform .16s ease}#arcane-eventos-acionador:hover,#arcane-eventos-acionador.arcane-eventos-acionador-ativo{color:#c2a84e;transform:translateX(-50%) scale(1.08)}#arcane-eventos-acionador:after{content:"MINI-EVENTOS";position:absolute;left:38px;top:50%;padding:5px 7px;transform:translate(4px,-50%);background:#080b09;border:1px solid #29302b;color:#b7b9b6;font:600 8px/1 Poppins,Arial,sans-serif;letter-spacing:.8px;white-space:nowrap;opacity:0;visibility:hidden;pointer-events:none;transition:.16s}#arcane-eventos-acionador:hover:after{opacity:1;visibility:visible;transform:translate(0,-50%)}';
     estilo.textContent += '#arcane-mini-eventos-admin{left:calc(100% + 15px);top:auto;bottom:-44px;border:1px solid rgba(49,49,49,.86);border-top:2px solid #7B6E3D;border-radius:0!important;background:rgba(0,4,3,.86);box-shadow:0 18px 45px rgba(0,0,0,.68),inset 0 0 0 1px rgba(185,158,89,.05)}#arcane-mini-eventos-admin:before{top:auto;bottom:14px;border-color:rgba(49,49,49,.86);background:rgba(0,4,3,.86)}#arcane-mini-eventos-admin button{border-radius:0!important}.arcane-admin-titulo{padding:12px 44px 10px 14px;border-bottom:1px solid rgba(49,49,49,.82);background:rgba(0,0,0,.46);color:#b99e59;font-size:15px}.arcane-admin-acoes{padding:10px 12px;border-top:0;border-bottom:1px solid rgba(49,49,49,.72);background:rgba(0,0,0,.2)}.arcane-admin-acoes button{min-height:30px;border-color:#313131;background:#101010;color:#b99e59;font:700 10px/1 Montserrat,Arial,sans-serif;letter-spacing:.08em}.arcane-admin-acoes button.primario:not(:disabled){border-color:#b99e59;background:#7B6E3D;color:#101010}.arcane-admin-acoes button.primario:not(:disabled):hover,.arcane-admin-acoes button:not(:disabled):hover{border-color:#538353;background:#244028;color:#d1d1d1}.arcane-admin-status{min-height:76px;padding:18px 14px;font-size:12px;background:rgba(0,0,0,.28)}.arcane-admin-status b{font-size:12px}.arcane-admin-rodape{display:flex;justify-content:flex-end;padding:10px 12px;border-top:1px solid rgba(49,49,49,.78);background:rgba(0,0,0,.38)}.arcane-admin-rodape button{min-width:164px;min-height:30px;border:1px solid #313131;background:#101010;color:#b99e59;font:700 10px/1 Montserrat,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}.arcane-admin-rodape button:not(:disabled):hover{border-color:#538353;background:#244028;color:#d1d1d1}.arcane-admin-rodape button:disabled{opacity:.45;cursor:not-allowed}.arcane-admin-fechar{display:flex;align-items:center;justify-content:center;width:26px;height:26px;padding:0;border-color:#313131;background:#101010;color:#b99e59;font-size:14px;line-height:1}.arcane-admin-fechar:hover{border-color:#7B6E3D;background:#7B6E3D;color:#101010}#arcane-eventos-acionador{border-radius:0!important}#arcane-eventos-acionador i{font-size:17px!important;line-height:1!important}';
     estilo.textContent += '.arcane-admin-prazo{display:block;margin-top:6px;color:#aaa;font-size:10px}.arcane-admin-prazo.abrir{color:#c4a957}.arcane-admin-prazo.encerrar-breve{color:#d5b86c}.arcane-admin-prazo.encerrar-atrasado{color:#d27868;font-weight:700}.arcane-admin-status small{display:block;margin-top:3px;color:#777;font-size:9px}.arcane-admin-rodape{gap:8px}.arcane-admin-rodape button{min-width:0;flex:1}#arcane-eventos-acionador:before{content:"";position:absolute;right:2px;top:2px;width:7px;height:7px;background:transparent;box-shadow:none;pointer-events:none}#arcane-eventos-acionador.arcane-lembrete-abrir:before{background:#c6a94f;box-shadow:0 0 7px rgba(198,169,79,.75);animation:arcane-lembrete-pulso 1.8s ease-in-out infinite}#arcane-eventos-acionador.arcane-lembrete-breve:before{background:#d5b86c;box-shadow:0 0 6px rgba(213,184,108,.65);animation:arcane-lembrete-pulso 2.4s ease-in-out infinite}#arcane-eventos-acionador.arcane-lembrete-atrasado:before{background:#c75d4e;box-shadow:0 0 8px rgba(199,93,78,.85);animation:arcane-lembrete-pulso 1.15s ease-in-out infinite}#arcane-eventos-acionador.arcane-lembrete-silenciado:before{width:5px;height:5px;opacity:.38;animation:none;box-shadow:none}@keyframes arcane-lembrete-pulso{0%,100%{opacity:.45;transform:scale(.72)}50%{opacity:1;transform:scale(1.12)}}#arcane-eventos-lembrete{position:absolute;z-index:99998;left:calc(100% + 15px);bottom:-34px;width:300px;padding:13px;border:1px solid rgba(49,49,49,.9);border-top:2px solid #7B6E3D;background:rgba(0,4,3,.94);box-shadow:0 16px 38px rgba(0,0,0,.68);color:#aaa;font:11px/1.5 Poppins,Arial,sans-serif}#arcane-eventos-lembrete b{display:block;margin-bottom:5px;color:#b99e59;font-size:12px;text-transform:uppercase}#arcane-eventos-lembrete span{display:block}#arcane-eventos-lembrete div{display:flex;gap:7px;margin-top:11px}#arcane-eventos-lembrete button{flex:1;min-height:28px;border:1px solid #313131;border-radius:0;background:#101010;color:#b99e59;font:700 8px/1 Montserrat,Arial,sans-serif;text-transform:uppercase;cursor:pointer}#arcane-eventos-lembrete button:hover{border-color:#7B6E3D;background:#7B6E3D;color:#101010}';
+    estilo.textContent += '@media (hover:none) and (pointer:coarse){#arcane-mini-eventos-admin:before{display:none!important}.arcane-admin-rodape{flex-wrap:wrap}.arcane-admin-rodape button{min-width:calc(50% - 4px)}#arcane-eventos-acionador:after{display:none}}';
     document.head.appendChild(estilo);
     painel = document.createElement('aside');
     painel.id = 'arcane-mini-eventos-admin';
@@ -1428,6 +1528,7 @@
       if (botao.dataset.acao === 'criar') confirmarCriacao();
       if (botao.dataset.acao === 'encerrar') confirmarEncerramento();
       if (botao.dataset.acao === 'lembrar') silenciarLembrete();
+      if (botao.dataset.acao === 'liberar-descanso') liberarDescansoAgora();
     });
     var avatar = document.querySelector('#rsidebar .ravatar');
     if (avatar) {
@@ -1455,11 +1556,21 @@
       document.body.appendChild(painel);
     }
     renderizar();
-    reconciliarEstado();
-    window.setTimeout(mostrarLembreteDiario, 700);
+    sincronizarEstadoDoForum().then(function (sincronizado) {
+      estadoServidorSincronizado = sincronizado;
+      renderizar();
+      if (sincronizado) mostrarLembreteDiario();
+    });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', ajustarPainelAoCelular);
+      window.visualViewport.addEventListener('scroll', ajustarPainelAoCelular);
+    }
+    window.addEventListener('orientationchange', function () {
+      window.setTimeout(ajustarPainelAoCelular, 120);
+    });
     window.setInterval(function () {
       renderizar();
-      mostrarLembreteDiario();
+      if (estadoServidorSincronizado) mostrarLembreteDiario();
     }, 60000);
   }
 
