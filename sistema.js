@@ -74,8 +74,8 @@
       atualizacao: { etiqueta: 'Atualização da narração', imagem: 'https://i.pinimg.com/1200x/aa/f1/77/aaf177566f87a33c76660484844f707c.jpg', posicao: 'center 48%' },
       visuais: [{ valor: 'header', nome: 'Visual · Header' }, { valor: 'lateral', nome: 'Visual · Lateral' }],
       decoracoes: {
-        superior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/corvos-romas.png', largura: '350px', x: '-70px', y: '-94px', rotacao: '0deg', opacidade: '.62', filtro: 'grayscale(1) saturate(.12) brightness(.76) contrast(1.12)' },
-        inferior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/corvos-romas.png', largura: '350px', x: '-62px', y: '-82px', rotacao: '0deg', opacidade: '.58', filtro: 'grayscale(1) saturate(.12) brightness(.72) contrast(1.12)' }
+        superior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/corvos-romas.png', largura: '350px', x: '-94px', y: '-94px', rotacao: '0deg', opacidade: '.62', filtro: 'grayscale(1) saturate(.12) brightness(.76) contrast(1.12)' },
+        inferior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/corvos-romas.png', largura: '350px', x: '-88px', y: '-82px', rotacao: '0deg', opacidade: '.58', filtro: 'grayscale(1) saturate(.12) brightness(.72) contrast(1.12)' }
       },
       imersao: { ativo: true, deslocamentoInicio: 10 }
     },
@@ -132,10 +132,10 @@
         deslocamentoX: -270, deslocamentoY: 10, transformacao: 'translate(30%,-16%) rotate(-4deg)'
       },
       lateral: {
-        imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/mariposa-caveira.png', largura: 176, opacidade: .88,
+        imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.9/mariposa-caveira.png', largura: 215, opacidade: .67,
         filtro: 'grayscale(1) saturate(.12) brightness(.84) contrast(1.1)',
-        deslocamentoX: -4, deslocamentoRankY: 24, proporcaoY: .72, limiteY: 650,
-        transformacao: 'translate(-39%,-50%) rotate(-8deg)'
+        deslocamentoX: 28, deslocamentoRankY: 24, proporcaoY: .72, limiteY: 650,
+        transformacao: 'translate(-32%,-50%) rotate(-8deg)'
       }
     },
     'tempestade-magica': {
