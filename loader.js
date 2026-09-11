@@ -1,18 +1,30 @@
-/* ARCANE · MINI-EVENTOS · LOADER EXTERNO V1
-   Este é o único JavaScript que permanecerá no painel do Forumeiros.
-   Antes da publicação, substitua a URL abaixo pela URL versionada do jsDelivr. */
+/* ARCANE · MINI-EVENTOS · LOADER EXTERNO V2
+   Consulta versao.json sem cache e carrega uma release imutável do jsDelivr. */
 (function (window, document) {
   'use strict';
-
   if (window.__ARCANE_MINI_EVENTOS_LOADER__) return;
   window.__ARCANE_MINI_EVENTOS_LOADER__ = true;
 
-  var BASE = 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.1/';
+  var REPOSITORIO = 'carolssuism/arcane-mini-eventos';
+  var VERSAO_RESERVA = 'v0.1.1';
   var TIMEOUT = 12000;
+  var base = '';
 
-  function url(arquivo) {
-    return BASE + arquivo;
+  function descobrirVersao() {
+    var ponteiro = 'https://raw.githubusercontent.com/' + REPOSITORIO + '/main/versao.json?t=' + Date.now();
+    return fetch(ponteiro, { cache: 'no-store', credentials: 'omit' })
+      .then(function (resposta) {
+        if (!resposta.ok) throw new Error('Falha ao consultar versao.json: ' + resposta.status);
+        return resposta.json();
+      })
+      .then(function (configuracao) {
+        var versao = String(configuracao && configuracao.versao || '');
+        return /^v\d+\.\d+\.\d+$/.test(versao) ? versao : VERSAO_RESERVA;
+      })
+      .catch(function () { return VERSAO_RESERVA; });
   }
+
+  function url(arquivo) { return base + arquivo; }
 
   function carregarCSS(arquivo) {
     return new Promise(function (resolve, reject) {
@@ -46,17 +58,20 @@
     });
   }
 
-  var css = carregarCSS('temas.css');
-  carregarJS('temas.js')
-    .then(function () { return carregarJS('sistema.js'); })
-    .then(function () { return css; })
+  descobrirVersao()
+    .then(function (versao) {
+      base = 'https://cdn.jsdelivr.net/gh/' + REPOSITORIO + '@' + versao + '/';
+      var css = carregarCSS('temas.css');
+      return carregarJS('temas.js')
+        .then(function () { return carregarJS('sistema.js'); })
+        .then(function () { return css; });
+    })
     .then(function () {
       document.documentElement.classList.add('arcane-mini-eventos-externo-pronto');
       window.dispatchEvent(new CustomEvent('arcane:minieventos:externo-pronto'));
     })
     .catch(function (erro) {
       document.documentElement.classList.add('arcane-mini-eventos-externo-falhou');
-      /* Falha segura: o fórum nativo permanece utilizável. */
       if (window.console && console.error) console.error('[ARCANE Mini-eventos]', erro);
     });
 })(window, document);
