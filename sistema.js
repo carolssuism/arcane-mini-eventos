@@ -548,6 +548,47 @@
   instalarCSSSeguro('arcane-me-chuva-estrelas-update-gradiente-real-v66-css', 'html.arcane-evento-chuva-estrelas .arcane-me-update.chuva .mu-body:before{top:0!important;bottom:0!important;background-color:transparent!important;background-image:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2722%27 height=%27184%27 viewBox=%270 0 22 184%27%3E%3Cg%3E%3Cpath fill=%27%23ddcdf7%27 d=%27M11 5l1.25 4.75L17 11l-4.75 1.25L11 17l-1.25-4.75L5 11l4.75-1.25z%27/%3E%3Cpath fill=%27%23e6c77a%27 d=%27M7 35l.7 2.3L10 38l-2.3.7L7 41l-.7-2.3L4 38l2.3-.7z%27/%3E%3Cpath fill=%27%23ffffff%27 d=%27M15 59l.9 3.1L19 63l-3.1.9L15 67l-.9-3.1L11 63l3.1-.9z%27/%3E%3Cpath fill=%27%23c0a3ef%27 d=%27M8 87l1.1 3.9L13 92l-3.9 1.1L8 97l-1.1-3.9L3 92l3.9-1.1z%27/%3E%3Cpath fill=%27%23e6c77a%27 d=%27M15 120l.65 2.35L18 123l-2.35.65L15 126l-.65-2.35L12 123l2.35-.65z%27/%3E%3Cpath fill=%27%23ddcdf7%27 d=%27M7 147l.9 3.1L11 151l-3.1.9L7 155l-.9-3.1L3 151l3.1-.9z%27/%3E%3Cpath fill=%27%23ffffff%27 d=%27M16 174l.55 1.95L18.5 176.5l-1.95.55L16 179l-.55-1.95-1.95-.55 1.95-.55z%27/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(180deg,#020104 0px,#020104 8px,#050309 26px,#09060f 48px,#0d0913 74px,#0d0913 100%)!important;background-position:center top,left top!important;background-size:18px 184px,100% 100%!important;background-repeat:repeat-y,no-repeat!important;box-shadow:none!important;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 72%,rgba(0,0,0,.68) 85%,rgba(0,0,0,.22) 96%,transparent 100%)!important;mask-image:linear-gradient(180deg,#000 0%,#000 72%,rgba(0,0,0,.68) 85%,rgba(0,0,0,.22) 96%,transparent 100%)!important}');
 
   instalarCSSSeguro('arcane-me-baile-rubra-complemento-css', 'html.arcane-baile-rubra .arcane-me-form:before,html.arcane-baile-rubra .arcane-me-form:after{filter:sepia(1) saturate(4) hue-rotate(320deg) brightness(.58) contrast(1.18)!important}html.arcane-baile-rubra .arcane-me-rp.baile .me-topo:after,html.arcane-baile-rubra .arcane-me-rp.baile .me-lateral:after,html.arcane-baile-rubra .arcane-me-update.baile .mu-header:after{content:""!important;position:absolute!important;inset:0!important;display:block!important;background:rgba(82,0,0,.52)!important;mix-blend-mode:multiply!important;pointer-events:none!important}');
+  instalarCSSSeguro('arcane-me-baile-codigos-css', 'html.arcane-evento-baile-mascaras .arcane-me-rp.baile .me-caixa{border-color:#5e5a52!important;background:#080908!important;box-shadow:0 18px 38px rgba(0,0,0,.34)!important}html.arcane-evento-baile-mascaras .arcane-me-rp.baile .me-topo{height:118px!important;background:#080908 url("https://i.pinimg.com/1200x/aa/f1/77/aaf177566f87a33c76660484844f707c.jpg") center 43%/cover no-repeat!important;filter:grayscale(1) brightness(.58) contrast(1.12)!important}html.arcane-evento-baile-mascaras .arcane-me-rp.baile .me-topo:before{content:""!important;position:absolute!important;inset:0!important;display:block!important;border:5px double rgba(201,195,181,.42)!important;background:linear-gradient(90deg,rgba(5,6,6,.82),transparent 56%,rgba(5,6,6,.34))!important;box-shadow:inset 0 0 30px #050606!important;pointer-events:none!important}html.arcane-evento-baile-mascaras .arcane-me-rp.baile .me-lateral{background:#080908 url("https://i.pinimg.com/736x/df/4b/3a/df4b3ace82a78bba315c8d41bc6922d2.jpg") 72% center/cover no-repeat!important;filter:grayscale(1) brightness(.55) contrast(1.12)!important}html.arcane-evento-baile-mascaras .arcane-me-rp.baile .me-corpo{background:linear-gradient(135deg,rgba(201,195,181,.035),transparent 42%),#101110!important}html.arcane-evento-baile-mascaras .arcane-me-rp.baile cor-1{color:#777269!important}html.arcane-evento-baile-mascaras .arcane-me-rp.baile cor-2{color:#c9c3b5!important}html.arcane-evento-baile-mascaras .arcane-me-rp.baile cor-3{color:#eee9df!important}html.arcane-evento-baile-mascaras .arcane-me-rp.baile cor-4{color:#8f897d!important}html.arcane-evento-baile-mascaras .arcane-me-rp.baile cor-5{color:#dedbd3!important}html.arcane-evento-baile-mascaras .arcane-me-update.baile{margin-bottom:42px!important}html.arcane-evento-baile-mascaras .arcane-me-update.baile .mu-header{min-height:176px!important;background-color:#080908!important;background-image:url("https://i.pinimg.com/1200x/aa/f1/77/aaf177566f87a33c76660484844f707c.jpg")!important;background-position:center 43%!important;filter:grayscale(1) brightness(.62) contrast(1.12)!important}html.arcane-evento-baile-mascaras .arcane-me-update.baile .mu-header:before{background:linear-gradient(90deg,rgba(4,5,5,.96) 0%,rgba(8,9,9,.78) 48%,rgba(8,9,9,.28) 100%)!important;mix-blend-mode:normal!important}html.arcane-evento-baile-mascaras .arcane-me-update.baile .mu-header:after{display:block!important;inset:7px!important;border:3px double rgba(201,195,181,.34)!important;background:none!important;opacity:1!important;mix-blend-mode:normal!important}html.arcane-evento-baile-mascaras .arcane-me-update.baile .mu-body{border-image:linear-gradient(180deg,#5e5a52,rgba(94,90,82,.52) 68%,transparent) 1!important;background:linear-gradient(180deg,#101110 0%,#101110 70%,transparent 100%)!important}html.arcane-evento-baile-mascaras .arcane-me-update.baile .mu-body:before,html.arcane-evento-baile-mascaras .arcane-me-update.baile .mu-body:after{background:linear-gradient(180deg,#080908,rgba(8,9,8,.72) 68%,transparent)!important}html.arcane-baile-rubra .arcane-me-rp.baile .me-caixa{border-color:#731818!important}html.arcane-baile-rubra .arcane-me-rp.baile .me-topo,html.arcane-baile-rubra .arcane-me-rp.baile .me-lateral,html.arcane-baile-rubra .arcane-me-update.baile .mu-header{filter:sepia(1) saturate(3.2) hue-rotate(320deg) brightness(.44) contrast(1.2)!important}html.arcane-baile-rubra .arcane-me-rp.baile .me-topo:before{border-color:rgba(226,42,42,.42)!important;background:linear-gradient(90deg,rgba(24,0,0,.88),transparent 56%,rgba(34,0,0,.42))!important;box-shadow:inset 0 0 30px #100000!important}html.arcane-baile-rubra .arcane-me-rp.baile .me-corpo{background:linear-gradient(135deg,rgba(226,42,42,.045),transparent 42%),#160707!important}html.arcane-baile-rubra .arcane-me-rp.baile cor-1{color:#731818!important}html.arcane-baile-rubra .arcane-me-rp.baile cor-2{color:#b51f26!important}html.arcane-baile-rubra .arcane-me-rp.baile cor-3{color:#e22a2a!important}html.arcane-baile-rubra .arcane-me-rp.baile cor-4{color:#f0d9d4!important}html.arcane-baile-rubra .arcane-me-rp.baile cor-5{color:#c8aaa5!important}html.arcane-baile-rubra .arcane-me-update.baile .mu-header:before{background:linear-gradient(90deg,rgba(22,0,0,.96),rgba(45,4,4,.76) 52%,rgba(65,4,4,.30))!important}html.arcane-baile-rubra .arcane-me-update.baile .mu-header:after{inset:7px!important;border:3px double rgba(226,42,42,.38)!important;background:none!important;mix-blend-mode:normal!important}html.arcane-baile-rubra .arcane-me-update.baile .mu-body{border-image:linear-gradient(180deg,#731818,rgba(115,24,24,.54) 68%,transparent) 1!important;background:linear-gradient(180deg,#160707 0%,#160707 70%,transparent 100%)!important}html.arcane-baile-rubra .arcane-me-update.baile .mu-body:before,html.arcane-baile-rubra .arcane-me-update.baile .mu-body:after{background:linear-gradient(180deg,#100404,rgba(16,4,4,.72) 68%,transparent)!important}@media(max-width:600px){html.arcane-evento-baile-mascaras .arcane-me-rp.baile .me-topo{height:92px!important}html.arcane-evento-baile-mascaras .arcane-me-update.baile .mu-header{min-height:150px!important}}');
+
+  instalarCSSSeguro('arcane-me-baile-update-imagem-css', 'html.arcane-evento-baile-mascaras .arcane-me-update.baile .mu-header{filter:none!important;background-image:linear-gradient(90deg,rgba(4,5,5,.82),rgba(8,9,9,.30)),url("https://i.pinimg.com/1200x/aa/f1/77/aaf177566f87a33c76660484844f707c.jpg")!important;background-position:center,center 43%!important;background-size:cover,cover!important;background-blend-mode:normal,luminosity!important}html.arcane-baile-rubra .arcane-me-update.baile .mu-header{filter:none!important;background-image:linear-gradient(90deg,rgba(35,0,0,.86),rgba(64,3,3,.46)),url("https://i.pinimg.com/1200x/aa/f1/77/aaf177566f87a33c76660484844f707c.jpg")!important;background-position:center,center 43%!important;background-size:cover,cover!important;background-blend-mode:multiply,luminosity!important}');
+
+  /* Baile: o visual lateral mantém a fotografia fixa e rola somente o texto. A barra
+     é desenhada pelo próprio motor para não herdar a scrollbar global do fórum. */
+  instalarCSSSeguro('arcane-me-baile-lateral-scroll-css', '.arcane-me-rp.baile.visual-lateral .me-caixa{grid-template-columns:210px minmax(0,1fr)!important;height:440px!important}.arcane-me-rp.baile.visual-lateral .me-lateral{display:block!important;height:440px!important;min-height:0!important}.arcane-me-rp.baile.visual-lateral .me-corpo{position:relative!important;height:440px!important;min-height:0!important;overflow:hidden!important;padding-right:36px!important}.arcane-me-rp.baile.visual-lateral .me-corpo>texto-evento{display:block!important;width:100%!important;height:100%!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;padding-right:14px!important;scrollbar-width:none!important;-ms-overflow-style:none!important}.arcane-me-rp.baile.visual-lateral .me-corpo>texto-evento::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}.arcane-me-rp.baile.visual-lateral .arcane-baile-scroll{position:absolute!important;z-index:4!important;top:18px!important;right:12px!important;bottom:18px!important;display:block!important;width:4px!important;min-width:4px!important;max-width:4px!important;height:auto!important;margin:0!important;padding:0!important;overflow:hidden!important;border:0!important;border-radius:0!important;background:color-mix(in srgb,var(--me-cor) 14%,#080908)!important;box-shadow:none!important;pointer-events:none!important}.arcane-me-rp.baile.visual-lateral .arcane-baile-scroll-thumb{position:absolute!important;top:0!important;left:0!important;display:block!important;width:4px!important;min-width:4px!important;max-width:4px!important;height:40px;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:var(--me-cor)!important;box-shadow:none!important;transform:translateY(0)}@media(max-width:600px){.arcane-me-rp.baile.visual-lateral .me-caixa{display:block!important;height:auto!important}.arcane-me-rp.baile.visual-lateral .me-lateral{height:190px!important;min-height:190px!important;border-right:0!important;border-bottom:1px solid color-mix(in srgb,var(--me-cor) 55%,transparent)!important}.arcane-me-rp.baile.visual-lateral .me-corpo{height:320px!important;padding-right:22px!important}.arcane-me-rp.baile.visual-lateral .me-corpo>texto-evento{padding-right:12px!important}.arcane-me-rp.baile.visual-lateral .arcane-baile-scroll{right:8px!important}}');
+
+  function prepararScrollBaile() {
+    Array.prototype.forEach.call(document.querySelectorAll('.arcane-me-rp.baile.visual-lateral .me-corpo'), function (corpo) {
+      var texto = corpo.querySelector(':scope > texto-evento');
+      if (!texto) return;
+      var trilho = corpo.querySelector(':scope > .arcane-baile-scroll');
+      if (!trilho) {
+        trilho = document.createElement('span');
+        trilho.className = 'arcane-baile-scroll';
+        trilho.setAttribute('aria-hidden', 'true');
+        trilho.innerHTML = '<span class="arcane-baile-scroll-thumb"></span>';
+        corpo.appendChild(trilho);
+      }
+      if (texto.getAttribute('data-arcane-baile-scroll') === '1') return;
+      texto.setAttribute('data-arcane-baile-scroll', '1');
+      var polegar = trilho.querySelector('.arcane-baile-scroll-thumb');
+      var sincronizar = function () {
+        var alturaTrilho = trilho.clientHeight;
+        var maximo = texto.scrollHeight - texto.clientHeight;
+        if (maximo <= 1 || alturaTrilho <= 0) {
+          trilho.style.visibility = 'hidden';
+          return;
+        }
+        trilho.style.visibility = 'visible';
+        var alturaPolegar = Math.max(28, alturaTrilho * (texto.clientHeight / texto.scrollHeight));
+        var percurso = alturaTrilho - alturaPolegar;
+        polegar.style.height = alturaPolegar + 'px';
+        polegar.style.transform = 'translateY(' + (percurso * texto.scrollTop / maximo) + 'px)';
+      };
+      texto.addEventListener('scroll', sincronizar, { passive: true });
+      if (window.ResizeObserver) new ResizeObserver(sincronizar).observe(texto);
+      window.setTimeout(sincronizar, 0);
+    });
+  }
 
   function ativarCSSAbertura(e) {
     if (!e || !e.marcador) return;
@@ -944,6 +985,13 @@
       var rubra = !!(controle && controle.checked);
       document.documentElement.classList.toggle('arcane-baile-rubra', rubra);
       document.documentElement.classList.toggle('arcane-baile-prata', !rubra);
+      var paleta = rubra
+        ? ['#731818', '#b51f26', '#e22a2a', '#f0d9d4', '#c8aaa5']
+        : ['#777269', '#c9c3b5', '#eee9df', '#8f897d', '#dedbd3'];
+      Array.prototype.forEach.call(document.querySelectorAll('.arcane-me-colors button[data-arcane-cor]'), function (botao, indice) {
+        botao.style.setProperty('background', paleta[indice] || paleta[0], 'important');
+        botao.title = (rubra ? 'Morte Rubra · cor ' : 'Antes da meia-noite · cor ') + (indice + 1);
+      });
     }
     atualizar();
     if (controle && !controle.__arcaneFaseLigada) {
@@ -998,6 +1046,7 @@
     var editor = document.createElement('div'); editor.className = 'arcane-me-editor'; editor.contentEditable = 'true'; editor.spellcheck = true; editor.innerHTML = textoParaVisual(codigo);
     if (meta) sc.parentNode.insertBefore(toolbar, meta); else sc.parentNode.insertBefore(toolbar, sc);
     sc.parentNode.insertBefore(editor, sc);
+    sincronizarFaseBaile(e);
     var visual = toolbar.querySelector('.arcane-me-visual'), largura = toolbar.querySelector('.arcane-me-largura');
     var visualSalvo = (codigo.match(/visual-(header|lateral|celeste)/i) || [])[1];
     var larguraSalva = (codigo.match(/(?:arcane-me-rp|arcane-blecaute-rp)[^"']*\b(estreito|medio|largo)\b/i) || [])[1];
@@ -1053,9 +1102,10 @@
       if (sc) sc.style.removeProperty('display');
     });
     preparar();
+    prepararScrollBaile();
     /* Forumeiros pode reconstruir postagens/editor alguns instantes depois. */
-    window.setTimeout(preparar, 700);
-    window.setTimeout(preparar, 1600);
+    window.setTimeout(function () { preparar(); prepararScrollBaile(); }, 700);
+    window.setTimeout(function () { preparar(); prepararScrollBaile(); }, 1600);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciarMotor, { once: true }); else iniciarMotor();
