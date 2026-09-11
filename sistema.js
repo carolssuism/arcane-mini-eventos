@@ -1131,7 +1131,9 @@
 
   async function listarTopicos(forumId, titulo) {
     var pagina = await obterDocumento('/f' + forumId + '-');
-    return Array.prototype.map.call(pagina.doc.querySelectorAll('a[href^="/t"]'), function (link) {
+    /* Considera apenas o título real da listagem. O link de "última postagem"
+       pode continuar apontando para um tópico já movido ao arquivo. */
+    return Array.prototype.map.call(pagina.doc.querySelectorAll('a.topictitle[href^="/t"]'), function (link) {
       var achado = (link.getAttribute('href') || '').match(/^\/t(\d+)(?:-|$)/i);
       return achado && link.textContent.trim() === titulo ? { id: achado[1], url: link.getAttribute('href') } : null;
     }).filter(Boolean).filter(function (topico, indice, todos) {
