@@ -4,7 +4,7 @@
 (function (window) {
   'use strict';
   window.ArcaneMiniEventosTemas = {
-    versao: '0.1.15',
+    versao: '0.1.16',
     eventos: {
     'blecaute': {
       nome: 'Blecaute em Hogwarts',
