@@ -4,7 +4,7 @@
 (function (window) {
   'use strict';
   window.ArcaneMiniEventosTemas = {
-    versao: '0.1.23',
+    versao: '0.1.24',
     eventos: {
     'blecaute': {
       nome: 'Blecaute em Hogwarts',
@@ -154,7 +154,7 @@
       superior: {
         imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/borboletas-luminosas-trio-verde.png', largura: 345, opacidade: .92,
         filtro: 'brightness(.94) contrast(1.04) drop-shadow(-1px 0 rgba(57,246,238,.25)) drop-shadow(1px 0 rgba(157,255,200,.18)) drop-shadow(0 0 5px rgba(74,208,174,.24))',
-        deslocamentoX: -136, deslocamentoY: 21, transformacao: 'scaleX(-1) rotate(4deg)'
+        deslocamentoX: -175, deslocamentoY: 21, transformacao: 'scaleX(-1) rotate(4deg)'
       },
       lateral: {
         imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/borboletas-luminosas-trio-verde.png', largura: 210, opacidade: .92,

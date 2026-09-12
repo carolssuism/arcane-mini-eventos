@@ -6,12 +6,12 @@
   window.__ARCANE_MINI_EVENTOS_LOADER__ = true;
 
   var REPOSITORIO = 'carolssuism/arcane-mini-eventos';
-  var VERSAO_RESERVA = 'v0.1.23';
+  var VERSAO_RESERVA = 'v0.1.24';
   var TIMEOUT = 12000;
   var base = '';
 
   function descobrirVersao() {
-    var ponteiro = 'https://raw.githubusercontent.com/' + REPOSITORIO + '/main/versao.json?t=' + Date.now();
+    var ponteiro = 'https://cdn.jsdelivr.net/gh/' + REPOSITORIO + '@main/versao.json?t=' + Date.now();
     return fetch(ponteiro, { cache: 'no-store', credentials: 'omit' })
       .then(function (resposta) {
         if (!resposta.ok) throw new Error('Falha ao consultar versao.json: ' + resposta.status);
