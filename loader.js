@@ -6,7 +6,7 @@
   window.__ARCANE_MINI_EVENTOS_LOADER__ = true;
 
   var REPOSITORIO = 'carolssuism/arcane-mini-eventos';
-  var VERSAO_RESERVA = 'v0.1.30';
+  var VERSAO_RESERVA = 'v0.1.31';
   var TIMEOUT = 12000;
   var base = '';
 
