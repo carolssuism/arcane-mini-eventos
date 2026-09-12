@@ -70,12 +70,12 @@ html .arcane-me-rp.falha[data-evento].visual-lateral .me-corpo{background:#040c0
 /* Créditos abaixo da moldura, mantendo o pseudo-elemento padrão. */
 html .arcane-me-update.falha[data-evento]{position:relative;margin-bottom:48px}
 html .arcane-me-update.falha[data-evento]:after{position:absolute;top:100%;left:0;right:0;margin:7px 0 0;background:none;border:0}
-html .arcane-me-rp.falha[data-evento].visual-header .me-caixa:after{width:166px;height:204px;right:0;bottom:-36px;transform:scaleX(-1)}
+html .arcane-me-rp.falha[data-evento].visual-header .me-caixa:after{width:166px;height:204px;right:-55px;bottom:-18px;transform:scaleX(-1) rotate(-7deg)}
 html .arcane-me-rp.falha[data-evento].visual-header .me-corpo{padding-bottom:62px!important}
-/* No modelo largo o trio superior fica sobre a imagem: não rouba largura. */
-html .arcane-me-rp.falha[data-evento].visual-header.largo .me-caixa:before{left:0;top:0;width:150px;height:180px;transform:none}
+/* Composição da v0.1.28: adornos nas bordas, com largura intermediária. */
+html .arcane-me-rp.falha[data-evento].visual-header.largo{padding-left:65px;padding-right:40px}
 @media(max-width:650px){
- html .arcane-me-rp.falha[data-evento].visual-header .me-caixa:after{width:140px;height:172px;bottom:-30px}
+ html .arcane-me-rp.falha[data-evento].visual-header .me-caixa:after{width:120px;height:150px;right:-30px;bottom:-10px}
  html .arcane-me-rp.falha[data-evento].visual-header .me-corpo{padding-bottom:62px!important}
- html .arcane-me-rp.falha[data-evento].visual-header.largo .me-caixa:before{width:120px;height:150px}
+ html .arcane-me-rp.falha[data-evento].visual-header.largo{padding-left:45px;padding-right:30px}
 }
