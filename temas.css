@@ -33,8 +33,11 @@ html .arcane-me-update.falha[data-evento] texto-update p,
 html .arcane-me-rp.falha[data-evento] .me-corpo p{font:inherit!important;letter-spacing:0!important;margin:0 0 18px!important}
 html .arcane-me-update.falha[data-evento] texto-update p:last-child,
 html .arcane-me-rp.falha[data-evento] .me-corpo p:last-child{margin-bottom:0!important}
-html .arcane-me-update.falha[data-evento] texto-update p:first-of-type:first-letter,
-html .arcane-me-rp.falha[data-evento] .me-corpo p:first-of-type:first-letter{float:left;font:46px/.85 "Modern Aesthetic",serif;color:#a0e7be;padding:6px 8px 0 0;text-shadow:0 0 15px #64ffac35}
+/* O editor gera texto direto e <br>, não necessariamente parágrafos.
+   A capitular pertence ao bloco de texto, inclusive quando contém <p>. */
+html .arcane-me-rp.falha[data-evento] .me-corpo>texto-evento{display:block}
+html .arcane-me-update.falha[data-evento] texto-update::first-letter,
+html .arcane-me-rp.falha[data-evento] .me-corpo>texto-evento::first-letter{float:left;font:46px/.85 "Modern Aesthetic",serif;color:#a0e7be;padding:6px 8px 0 0;text-shadow:0 0 15px #64ffac35}
 html .arcane-me-rp.falha[data-evento] .me-caixa{position:relative;border:1px solid #345448;background:#040c09;box-shadow:0 18px 80px #000}
 html .arcane-me-rp.falha[data-evento].visual-header .me-caixa{overflow:visible}
 /* Reserva espaço real para o adorno dentro da largura disponível do post.
