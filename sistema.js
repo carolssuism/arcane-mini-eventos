@@ -79,6 +79,25 @@
       },
       imersao: { ativo: true, deslocamentoInicio: 10 }
     },
+    'falha-coletiva': {
+      nome: 'Falha Coletiva de Magia', classe: 'falha', topico: '67',
+      cor: '#58f5f0', cor2: '#9dffc8', cor3: '#d6bc7a',
+      fundo: '#06090a', corpo: '#080c0b', linha: '#27483f', texto: '#d6dfdd',
+      cores: ['#3b8f86', '#58f5f0', '#9dffc8', '#d6bc7a', '#eefcfb'],
+      etiqueta: 'A magia deixou de responder', padraoTitulo: 'A RUPTURA SE ESPALHA',
+      padraoSubtitulo: 'O impossível perdeu a forma.',
+      atualizacao: {
+        etiqueta: 'Atualização da narração',
+        imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/falha-alucinogena-header.png',
+        posicao: 'center 50%'
+      },
+      visuais: [{ valor: 'header', nome: 'Visual · Header' }, { valor: 'lateral', nome: 'Visual · Lateral' }],
+      decoracoes: {
+        superior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/poeira-magica.png', largura: '285px', x: '-124px', y: '-17px', rotacao: '67deg', opacidade: '.59', filtro: 'hue-rotate(76deg) saturate(1.58) brightness(1.04) drop-shadow(0 0 6px rgba(121,255,215,.58)) drop-shadow(0 0 14px rgba(74,208,174,.3))' },
+        inferior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/poeira-magica.png', largura: '285px', x: '-111px', y: '-23px', rotacao: '61deg', opacidade: '.59', filtro: 'hue-rotate(76deg) saturate(1.58) brightness(1.04) drop-shadow(0 0 6px rgba(121,255,215,.58)) drop-shadow(0 0 14px rgba(74,208,174,.3))' }
+      },
+      imersao: { ativo: true, deslocamentoInicio: 10 }
+    },
     'tempestade-magica': {
       nome: 'Tempestade Mágica',
       classe: 'tempestade',
@@ -136,6 +155,19 @@
         filtro: 'grayscale(1) saturate(.12) brightness(.84) contrast(1.1)',
         deslocamentoX: 20, deslocamentoRankY: 24, proporcaoY: .72, limiteY: 650,
         transformacao: 'translate(-32%,-50%) rotate(-8deg)'
+      }
+    },
+    'falha-coletiva': {
+      superior: {
+        imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/borboletas-luminosas-trio-verde.png', largura: 345, opacidade: .92,
+        filtro: 'brightness(.94) contrast(1.04) drop-shadow(-1px 0 rgba(57,246,238,.25)) drop-shadow(1px 0 rgba(157,255,200,.18)) drop-shadow(0 0 5px rgba(74,208,174,.24))',
+        deslocamentoX: -136, deslocamentoY: 21, transformacao: 'scaleX(-1) rotate(4deg)'
+      },
+      lateral: {
+        imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/borboletas-luminosas-trio-verde.png', largura: 210, opacidade: .92,
+        filtro: 'brightness(.94) contrast(1.04) drop-shadow(-1px 0 rgba(57,246,238,.25)) drop-shadow(1px 0 rgba(157,255,200,.18)) drop-shadow(0 0 5px rgba(74,208,174,.24))',
+        deslocamentoX: -71, deslocamentoRankY: -88, proporcaoY: .72, limiteY: 650,
+        transformacao: 'rotate(-8deg)'
       }
     },
     'tempestade-magica': {
@@ -445,13 +477,14 @@
     }
     var mensagem = document.querySelector('textarea[name="message"]');
     var valor = mensagem ? mensagem.value : '';
-    var achado = valor.match(/data-evento=["'](blecaute|chuva-estrelas|tempestade-magica|baile-mascaras)["']/i);
+    var achado = valor.match(/data-evento=["'](blecaute|chuva-estrelas|tempestade-magica|baile-mascaras|falha-coletiva)["']/i);
     if (achado) return { id: achado[1].toLowerCase(), config: EVENTOS[achado[1].toLowerCase()], marcador: null };
     if (/arcane-blecaute-(?:rp|atualizacao)|<texto-(?:blecaute|atualizacao)>/i.test(valor)) return { id: 'blecaute', config: EVENTOS.blecaute, marcador: null };
     if (/arcane-baile-preview|arcane-me-(?:rp|update)[^>]*\bbaile\b/i.test(valor)) return { id: 'baile-mascaras', config: EVENTOS['baile-mascaras'], marcador: null };
     var campoTopico = document.querySelector('form#quick_reply input[name="t"],form[name="post"] input[name="t"]');
     if ((campoTopico && campoTopico.value === '55') || /(?:^|\/)t55(?:-|$)/i.test(location.pathname)) return { id: 'blecaute', config: EVENTOS.blecaute, marcador: marcador || null };
     if ((campoTopico && campoTopico.value === '66') || /(?:^|\/)t66(?:-|$)/i.test(location.pathname)) return { id: 'baile-mascaras', config: EVENTOS['baile-mascaras'], marcador: marcador || null };
+    if ((campoTopico && campoTopico.value === '67') || /(?:^|\/)t67(?:-|$)/i.test(location.pathname)) return { id: 'falha-coletiva', config: EVENTOS['falha-coletiva'], marcador: marcador || null };
     if (/\/post(?:$|[?#])/i.test(location.pathname)) {
       try {
         var lembrado = sessionStorage.getItem('arcaneMiniEventoAtual');
@@ -1079,8 +1112,48 @@
     atualizar();
   }
 
+  function prepararFalhaColetiva(e) {
+    if (!e || e.id !== 'falha-coletiva') return;
+    var urlHeader = 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/falha-alucinogena-header.png';
+    var css = [
+      '#arcane-falha-abertura{box-sizing:border-box;width:min(760px,100%);margin:auto;color:#d6dfdd}',
+      '#arcane-falha-abertura *{box-sizing:border-box}',
+      '#arcane-falha-abertura .fc-box{position:relative;border:1px solid rgba(126,244,231,.42);background:#06090a;box-shadow:0 24px 55px rgba(0,0,0,.6)}',
+      '#arcane-falha-abertura .fc-header{position:relative;height:350px;overflow:hidden;isolation:isolate;border-bottom:1px solid rgba(88,245,240,.52);background:#061311 url("' + urlHeader + '") center/cover no-repeat}',
+      '#arcane-falha-abertura .fc-header:before{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,rgba(0,5,6,.96) 0%,rgba(0,6,7,.72) 31%,rgba(0,7,7,.16) 57%,rgba(0,7,7,.02) 72%),linear-gradient(0deg,rgba(1,7,7,.58),transparent 42%);pointer-events:none}',
+      '#arcane-falha-abertura .fc-header:after{content:"";position:absolute;z-index:2;inset:-12px;opacity:.44;mix-blend-mode:screen;background:repeating-linear-gradient(174deg,transparent 0 34px,rgba(88,245,240,.16) 35px,transparent 37px 74px),radial-gradient(circle at 13% 19%,rgba(88,245,240,.72) 0 1px,transparent 3px),radial-gradient(circle at 77% 35%,rgba(157,255,200,.7) 0 1px,transparent 4px);animation:fc-prisma 6s ease-in-out infinite;pointer-events:none}',
+      '#arcane-falha-abertura .fc-title{position:absolute;z-index:3;left:34px;bottom:43px;max-width:590px;text-shadow:0 4px 22px #000}',
+      '#arcane-falha-abertura .fc-label,#arcane-falha-abertura .fc-time small{display:block;color:#9dffc8;font:600 8px/1 Montserrat,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase}',
+      '#arcane-falha-abertura .fc-title h1{position:relative;margin:14px 0 16px;color:#eefcfb;font:normal 54px/.73 "Modern Aesthetic",serif;letter-spacing:-1.5px;white-space:nowrap;text-transform:uppercase;animation:fc-title-fail 8s steps(1,end) infinite}',
+      '#arcane-falha-abertura .fc-title h1:before,#arcane-falha-abertura .fc-title h1:after{content:attr(data-title);position:absolute;inset:0;opacity:0;pointer-events:none}',
+      '#arcane-falha-abertura .fc-title h1:before{color:#39f6ee;transform:translateX(-3px);clip-path:inset(10% 0 58% 0)}#arcane-falha-abertura .fc-title h1:after{color:#baff83;transform:translateX(3px);clip-path:inset(57% 0 12% 0)}',
+      '#arcane-falha-abertura .fc-time{position:absolute;z-index:3;top:25px;right:25px;padding-left:13px;border-left:1px solid #58f5f0;text-align:right}#arcane-falha-abertura .fc-time small{color:#c8d9d6;font-size:6px}#arcane-falha-abertura .fc-time strong{display:block;margin-top:5px;color:#9dffc8;font:normal 27px/1 "Modern Aesthetic",serif;text-shadow:0 0 16px rgba(88,245,240,.38)}',
+      '#arcane-falha-abertura .fc-body{position:relative;isolation:isolate;padding:43px 46px 46px;border:1px solid rgba(62,114,105,.48);border-top:0;background:linear-gradient(135deg,rgba(18,43,39,.25),transparent 40%),#080c0b}',
+      '#arcane-falha-abertura .fc-body:before{content:"";position:absolute;z-index:0;inset:10px;border:1px solid rgba(93,151,140,.22);pointer-events:none}',
+      '#arcane-falha-abertura .fc-body:after{content:"";position:absolute;z-index:2;inset:9px;padding:1px;background:conic-gradient(from var(--fc-angle),transparent 0 72%,rgba(88,245,240,.08) 77%,#58f5f0 82%,#efffff 84%,#9dffc8 87%,rgba(88,245,240,.08) 92%,transparent 97%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;filter:drop-shadow(0 0 4px rgba(88,245,240,.9)) drop-shadow(0 0 9px rgba(157,255,200,.45));animation:fc-border-run 1.45s linear infinite,fc-border-glitch 3.7s steps(1,end) infinite;pointer-events:none}',
+      '#arcane-falha-abertura .fc-copy{position:relative;z-index:1;padding:3px 5px 0;color:#c7d1ce;font:400 13px/1.75 Poppins,Arial,sans-serif;text-align:justify}#arcane-falha-abertura .fc-copy p{margin:0 0 17px}#arcane-falha-abertura .fc-copy p:last-child{margin-bottom:0}',
+      '#arcane-falha-abertura .fc-quote{position:relative;z-index:1;margin:28px 5px 0;padding:17px 24px;border-top:1px solid rgba(88,245,240,.25);border-bottom:1px solid rgba(157,255,200,.13);background:rgba(4,12,11,.62);color:#a9e9dc;font:normal 17px/1.4 "Modern Aesthetic",serif;text-align:left}#arcane-falha-abertura .fc-credit{display:block;margin-top:8px;color:#70817d;font:700 8px/1 Consolas,monospace;text-align:center}',
+      'html.arcane-evento-falha-coletiva .arcane-me-narracao-falha #rpost-header .poster-name,html.arcane-evento-falha-coletiva .arcane-me-narracao-falha #rpost-header .poster-name>*{color:#eefcfb!important;text-shadow:-2px 0 rgba(88,245,240,.4),2px 0 rgba(157,255,200,.24)!important}html.arcane-evento-falha-coletiva .arcane-me-narracao-falha #rpost-header:before,html.arcane-evento-falha-coletiva .arcane-me-narracao-falha>.inner>.postprofile>.rrank:before{background-color:#173e36!important}html.arcane-evento-falha-coletiva .arcane-me-narracao-falha>.inner>.postprofile>.rrank,html.arcane-evento-falha-coletiva .arcane-me-narracao-falha>.inner>.postprofile>.rrank>*{color:#dffbf6!important}',
+      'html.arcane-evento-falha-coletiva .arcane-me-rp.falha .me-topo,html.arcane-evento-falha-coletiva .arcane-me-rp.falha .me-lateral{background-image:linear-gradient(90deg,rgba(0,8,7,.72),rgba(0,3,3,.26)),url("' + urlHeader + '")!important;background-size:cover!important;background-position:center!important}html.arcane-evento-falha-coletiva .arcane-me-update.falha .mu-header{background-image:linear-gradient(90deg,rgba(0,8,7,.82),rgba(0,3,3,.28)),url("' + urlHeader + '")!important;background-size:cover!important;background-position:center!important}',
+      'html.arcane-evento-falha-coletiva .arcane-me-form:before,html.arcane-evento-falha-coletiva .arcane-me-form:after{height:205px!important;aspect-ratio:auto!important;mix-blend-mode:screen!important}html.arcane-evento-falha-coletiva .arcane-me-form:after{transform:scaleX(-1) rotate(61deg)!important}',
+      '@property --fc-angle{syntax:"<angle>";initial-value:0deg;inherits:false}@keyframes fc-prisma{0%,100%{opacity:.28;transform:translate(0)}50%{opacity:.56;filter:brightness(1.22)}83%{transform:translate(0)}84%{transform:translate(3px,-1px)}86%{transform:translate(-2px,1px)}88%{transform:translate(0)}}@keyframes fc-border-run{to{--fc-angle:360deg}}@keyframes fc-border-glitch{0%,77%,82%,100%{opacity:1;transform:translate(0)}78%{opacity:.25;transform:translate(2px,-1px)}79%{opacity:1;transform:translate(-2px,1px)}80%{opacity:.48;transform:translate(1px,0)}}@keyframes fc-title-fail{0%,89%,94%,100%{transform:none;text-shadow:0 4px 22px #000}90%{transform:translateX(2px);text-shadow:-4px 0 rgba(88,245,240,.55),4px 0 rgba(157,255,200,.42);filter:brightness(1.18)}91%{transform:translateX(-1px);filter:brightness(1.18)}92%{transform:none}}',
+      '@media(max-width:760px){#arcane-falha-abertura .fc-header{height:285px}#arcane-falha-abertura .fc-title{left:23px;bottom:34px}#arcane-falha-abertura .fc-title h1{font-size:34px}#arcane-falha-abertura .fc-time{top:17px;right:17px}#arcane-falha-abertura .fc-body{padding:34px 27px 37px}#arcane-falha-abertura .fc-copy{font-size:12px;text-align:left}}@media(prefers-reduced-motion:reduce){#arcane-falha-abertura .fc-header:after,#arcane-falha-abertura .fc-title h1,#arcane-falha-abertura .fc-body:after{animation:none!important}}'
+    ].join('');
+    instalarCSSSeguro('arcane-me-falha-coletiva-css', css);
+
+    var marcador = document.querySelector('.arcane-mini-evento[data-evento="falha-coletiva"],#arcane-falha-abertura');
+    if (marcador && !marcador.querySelector('.fc-box')) {
+      marcador.id = 'arcane-falha-abertura';
+      marcador.classList.add('arcane-mini-evento');
+      marcador.setAttribute('data-evento', 'falha-coletiva');
+      marcador.innerHTML = '<div class="fc-box"><div class="fc-header"><div class="fc-time"><small>A ruptura começou às</small><strong>19:07</strong></div><div class="fc-title"><span class="fc-label">Mini-evento</span><h1 data-title="FALHA COLETIVA DE MAGIA">Falha Coletiva<br>de Magia</h1><span class="fc-label">O impossível perdeu a forma</span></div></div><div class="fc-body"><div class="fc-copy"><p>O primeiro sinal não foi um estrondo, mas uma ausência. Uma centelha deixou a ponta de uma varinha e se desfez no ar, repartida em cores que nenhum feitiço deveria possuir.</p><p>Então todas as outras falharam de uma só vez. Encantamentos perderam o rumo, runas se deslocaram das superfícies e objetos suspensos hesitaram antes de cair. Por alguns segundos, a magia pareceu não reconhecer quem a chamava.</p><p>Quando as luzes voltaram, vieram erradas: verdes demais, brancas demais, multiplicadas nos reflexos como rachaduras. As varinhas continuavam quentes nas mãos. Nenhuma, porém, tornou a obedecer.</p></div><blockquote class="fc-quote">A magia não desapareceu. Apenas deixou de responder.</blockquote></div></div><span class="fc-credit">[ARCANE]</span>';
+    }
+    if (marcador) e.marcador = marcador;
+  }
+
   function preparar() {
     var e = encontrarEvento();
+    prepararFalhaColetiva(e);
     sincronizarFaseBaile(e);
     /* O layout precisa ser reduzido antes de calcular a posição dos adornos. */
     aplicarModoImersivo(e);

@@ -4,7 +4,7 @@
 (function (window) {
   'use strict';
   window.ArcaneMiniEventosTemas = {
-    versao: '0.1.22',
+    versao: '0.1.23',
     eventos: {
     'blecaute': {
       nome: 'Blecaute em Hogwarts',
@@ -82,6 +82,21 @@
       },
       imersao: { ativo: true, deslocamentoInicio: 10 }
     },
+    'falha-coletiva': {
+      nome: 'Falha Coletiva de Magia', classe: 'falha', topico: '67',
+      cor: '#58f5f0', cor2: '#9dffc8', cor3: '#d6bc7a',
+      fundo: '#06090a', corpo: '#080c0b', linha: '#27483f', texto: '#d6dfdd',
+      cores: ['#3b8f86', '#58f5f0', '#9dffc8', '#d6bc7a', '#eefcfb'],
+      etiqueta: 'A magia deixou de responder', padraoTitulo: 'A RUPTURA SE ESPALHA',
+      padraoSubtitulo: 'O impossível perdeu a forma.',
+      atualizacao: { etiqueta: 'Atualização da narração', imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/falha-alucinogena-header.png', posicao: 'center 50%' },
+      visuais: [{ valor: 'header', nome: 'Visual · Header' }, { valor: 'lateral', nome: 'Visual · Lateral' }],
+      decoracoes: {
+        superior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/poeira-magica.png', largura: '285px', x: '-124px', y: '-17px', rotacao: '67deg', opacidade: '.59', filtro: 'hue-rotate(76deg) saturate(1.58) brightness(1.04) drop-shadow(0 0 6px rgba(121,255,215,.58)) drop-shadow(0 0 14px rgba(74,208,174,.3))' },
+        inferior: { imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/poeira-magica.png', largura: '285px', x: '-111px', y: '-23px', rotacao: '61deg', opacidade: '.59', filtro: 'hue-rotate(76deg) saturate(1.58) brightness(1.04) drop-shadow(0 0 6px rgba(121,255,215,.58)) drop-shadow(0 0 14px rgba(74,208,174,.3))' }
+      },
+      imersao: { ativo: true, deslocamentoInicio: 10 }
+    },
     'tempestade-magica': {
       nome: 'Tempestade Mágica',
       classe: 'tempestade',
@@ -133,6 +148,19 @@
         filtro: 'grayscale(1) saturate(.12) brightness(.84) contrast(1.1)',
         deslocamentoX: 20, deslocamentoRankY: 24, proporcaoY: .72, limiteY: 650,
         transformacao: 'translate(-32%,-50%) rotate(-8deg)'
+      }
+    },
+    'falha-coletiva': {
+      superior: {
+        imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/borboletas-luminosas-trio-verde.png', largura: 345, opacidade: .92,
+        filtro: 'brightness(.94) contrast(1.04) drop-shadow(-1px 0 rgba(57,246,238,.25)) drop-shadow(1px 0 rgba(157,255,200,.18)) drop-shadow(0 0 5px rgba(74,208,174,.24))',
+        deslocamentoX: -136, deslocamentoY: 21, transformacao: 'scaleX(-1) rotate(4deg)'
+      },
+      lateral: {
+        imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.23/borboletas-luminosas-trio-verde.png', largura: 210, opacidade: .92,
+        filtro: 'brightness(.94) contrast(1.04) drop-shadow(-1px 0 rgba(57,246,238,.25)) drop-shadow(1px 0 rgba(157,255,200,.18)) drop-shadow(0 0 5px rgba(74,208,174,.24))',
+        deslocamentoX: -71, deslocamentoRankY: -88, proporcaoY: .72, limiteY: 650,
+        transformacao: 'rotate(-8deg)'
       }
     },
     'tempestade-magica': {
