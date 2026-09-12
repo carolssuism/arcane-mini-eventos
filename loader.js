@@ -6,7 +6,7 @@
   window.__ARCANE_MINI_EVENTOS_LOADER__ = true;
 
   var REPOSITORIO = 'carolssuism/arcane-mini-eventos';
-  var VERSAO_RESERVA = 'v0.1.28';
+  var VERSAO_RESERVA = 'v0.1.29';
   var TIMEOUT = 12000;
   var base = '';
 
@@ -74,10 +74,10 @@
   descobrirVersao()
     .then(function (versao) {
       base = 'https://cdn.jsdelivr.net/gh/' + REPOSITORIO + '@' + versao + '/';
-      var css = carregarCSS('temas.css');
-      return carregarJS('temas.js')
-        .then(function () { return carregarJS('sistema.js'); })
-        .then(function () { return css; });
+      // Aplica a folha final antes de inicializar e posicionar o tema.
+      return carregarCSS('temas.css')
+        .then(function () { return carregarJS('temas.js'); })
+        .then(function () { return carregarJS('sistema.js'); });
     })
     .then(function () {
       document.documentElement.classList.add('arcane-mini-eventos-externo-pronto');

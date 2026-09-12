@@ -401,6 +401,7 @@
 
     var camada = document.createElement('div');
     camada.id = 'arcane-me-decoracao-pagina';
+    camada.style.opacity = '0';
     camada.setAttribute('aria-hidden', 'true');
     camada.innerHTML = '<img class="arcane-me-adorno arcane-me-adorno-superior" alt=""><img class="arcane-me-adorno arcane-me-adorno-lateral" alt="">';
 
@@ -453,7 +454,36 @@
     posicionarDecoracoes();
     window.addEventListener('resize', agendarPosicao, { passive: true });
     window.addEventListener('load', agendarPosicao, { once: true });
-    window.setTimeout(agendarPosicao, 900);
+    // Imagens/fontes alteram as âncoras; só exibe após a primeira medição estável.
+    var imagensDecoracao = Array.prototype.slice.call(primeiraPostagem.querySelectorAll('img'));
+    imagensDecoracao.push(superior, lateral);
+    var recursosDecoracao = imagensDecoracao.filter(function (img) {
+      return img.loading !== 'lazy';
+    }).map(function (img) {
+      if (img.complete) return Promise.resolve();
+      return new Promise(function (resolve) {
+        img.addEventListener('load', resolve, { once: true });
+        img.addEventListener('error', resolve, { once: true });
+      });
+    });
+    if (document.fonts) recursosDecoracao.push(document.fonts.ready);
+    var limiteDecoracao;
+    Promise.race([
+      Promise.all(recursosDecoracao),
+      new Promise(function (resolve) { limiteDecoracao = window.setTimeout(resolve, 4000); })
+    ]).then(function () {
+      window.clearTimeout(limiteDecoracao);
+      requestAnimationFrame(function () {
+        posicionarDecoracoes();
+        requestAnimationFrame(function () { camada.style.opacity = '1'; });
+      });
+    });
+    if (window.ResizeObserver) {
+      var observarDecoracao = new ResizeObserver(agendarPosicao);
+      observarDecoracao.observe(primeiraPostagem);
+      var perfilDecoracao = primeiraPostagem.querySelector('.postprofile');
+      if (perfilDecoracao) observarDecoracao.observe(perfilDecoracao);
+    }
   }
 
   function encontrarEvento() {
@@ -1160,7 +1190,6 @@
     sincronizarFaseBaile(e);
     /* O layout precisa ser reduzido antes de calcular a posição dos adornos. */
     aplicarModoImersivo(e);
-    aplicarDecoracoesPagina();
     if (!e) {
       liberarIdentidadeNarrador(null);
       return;
@@ -1171,6 +1200,7 @@
     aplicarNarracao(e);
     aplicarSigilosNarrador();
     liberarIdentidadeNarrador(e);
+    aplicarDecoracoesPagina();
     var form = document.querySelector('form#quick_reply,form[name="post"]');
     if (!form || form.classList.contains('arcane-me-form') || form.classList.contains('arcane-me-pagina')) return;
     var original = form.querySelector('textarea[name="message"]');

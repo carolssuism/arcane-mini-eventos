@@ -8,7 +8,7 @@
    estilo do Forumeiros para existir antes de qualquer requisição externa.
 */
 
-/* Falha Coletiva — modelos secundários aprovados, v0.1.28.
+/* Falha Coletiva — modelos secundários aprovados, v0.1.29.
    Escopo por classe e data-evento: preserva as tags e os demais eventos. */
 html .arcane-me-update.falha[data-evento],html .arcane-me-rp.falha[data-evento]{
   --fc-arte:url("falha-alucinogena-header.png");
@@ -39,7 +39,7 @@ html .arcane-me-rp.falha[data-evento] .me-caixa{position:relative;border:1px sol
 html .arcane-me-rp.falha[data-evento].visual-header .me-caixa{overflow:visible}
 /* Reserva espaço real para o adorno dentro da largura disponível do post.
    Inclui a rotação do trio, sem depender do overflow dos ancestrais do fórum. */
-html .arcane-me-rp.falha[data-evento].visual-header.largo{box-sizing:border-box;padding-left:105px;padding-right:50px}
+html .arcane-me-rp.falha[data-evento].visual-header.largo{box-sizing:border-box;padding:0}
 html .arcane-me-rp.falha[data-evento].visual-header .me-caixa:after{content:"";position:absolute;z-index:3;right:-40px;bottom:8px;width:142px;height:174px;background:var(--fc-borboletas) center/contain no-repeat;transform:scaleX(-1) rotate(-7deg);filter:brightness(.82);pointer-events:none}
 html .arcane-me-rp.falha[data-evento].visual-header .me-corpo{padding-bottom:125px!important}
 html .arcane-me-rp.falha[data-evento].visual-header .me-topo{height:180px;background:#06100d var(--fc-arte) center 42%/cover no-repeat!important;mask-image:linear-gradient(#000 35%,transparent 100%)}
@@ -61,9 +61,21 @@ html .arcane-me-rp.falha[data-evento].visual-lateral .me-corpo{background:#040c0
  html .arcane-me-update.falha[data-evento] .mu-title{font-size:34px}
  html .arcane-me-update.falha[data-evento] .mu-body,html .arcane-me-rp.falha[data-evento].visual-header .me-corpo{padding-left:30px;padding-right:30px}
  html .arcane-me-rp.falha[data-evento].visual-header .me-caixa:before{width:115px;height:155px;left:-43px;top:82px}
- html .arcane-me-rp.falha[data-evento].visual-header.largo{padding-left:55px;padding-right:28px}
+ html .arcane-me-rp.falha[data-evento].visual-header.largo{padding:0}
  html .arcane-me-rp.falha[data-evento].visual-header .me-caixa:after{width:100px;height:125px;right:-20px;bottom:8px}
  html .arcane-me-rp.falha[data-evento].visual-header .me-corpo{padding-bottom:100px!important}
  html .arcane-me-rp.falha[data-evento].visual-lateral .me-caixa{grid-template-columns:70px minmax(0,1fr)}
  html .arcane-me-rp.falha[data-evento].visual-lateral .me-corpo{padding-left:28px;padding-right:25px}
+}
+/* Créditos abaixo da moldura, mantendo o pseudo-elemento padrão. */
+html .arcane-me-update.falha[data-evento]{position:relative;margin-bottom:48px}
+html .arcane-me-update.falha[data-evento]:after{position:absolute;top:100%;left:0;right:0;margin:7px 0 0;background:none;border:0}
+html .arcane-me-rp.falha[data-evento].visual-header .me-caixa:after{width:166px;height:204px;right:0;bottom:-36px;transform:scaleX(-1)}
+html .arcane-me-rp.falha[data-evento].visual-header .me-corpo{padding-bottom:62px!important}
+/* No modelo largo o trio superior fica sobre a imagem: não rouba largura. */
+html .arcane-me-rp.falha[data-evento].visual-header.largo .me-caixa:before{left:0;top:0;width:150px;height:180px;transform:none}
+@media(max-width:650px){
+ html .arcane-me-rp.falha[data-evento].visual-header .me-caixa:after{width:140px;height:172px;bottom:-30px}
+ html .arcane-me-rp.falha[data-evento].visual-header .me-corpo{padding-bottom:62px!important}
+ html .arcane-me-rp.falha[data-evento].visual-header.largo .me-caixa:before{width:120px;height:150px}
 }

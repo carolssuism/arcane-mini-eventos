@@ -1,8 +1,12 @@
-# Publicação v0.1.28
+# Publicação v0.1.29
+
+IMPORTANTE: nesta versão substitua também o loader no painel do Forumeiros pelo loader.js incluído. A nova ordem aguarda temas.css antes de inicializar os scripts. Só atualizar o GitHub não altera o loader que já está no painel.
+
+Mudanças v0.1.29: créditos ADM fora da moldura; borboletas inferiores maiores e rodapé de 62px; largura ampla restaurada, com trio superior sobre a imagem; posicionamento dos adornos após estilos finais, aguardando fontes/imagens por até 4s e acompanhando mudanças de tamanho. As animações intencionais dos eventos foram mantidas. O comportamento visual em carregamento frio no fórum ainda precisa de verificação após publicar.
 
 Suba o conteúdo desta pasta na raiz de carolssuism/arcane-mini-eventos, preservando a pasta assets. Não suba a pasta release-v0.1.27 como uma subpasta do repositório.
 
-Crie a tag/release v0.1.28 no commit enviado. O loader consulta versao.json em main e carrega os arquivos dessa tag; sem ela, a nova versão não carrega.
+Crie a tag/release v0.1.29 no commit enviado. O loader consulta versao.json em main e carrega os arquivos dessa tag; sem ela, a nova versão não carrega.
 
 Correções desta versão: remoção do gradiente da narração lateral e reserva de espaço para as borboletas dentro da largura total do modelo header largo. A caixa desse modelo fica um pouco mais estreita para acomodar o adorno sem cortes. Se o CDN continuar indicando uma versão antiga, o loader.js incluído usa v0.1.28 como piso.
 
