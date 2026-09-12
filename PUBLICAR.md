@@ -1,8 +1,10 @@
-# Publicação v0.1.27
+# Publicação v0.1.28
 
 Suba o conteúdo desta pasta na raiz de carolssuism/arcane-mini-eventos, preservando a pasta assets. Não suba a pasta release-v0.1.27 como uma subpasta do repositório.
 
-Crie a tag/release v0.1.27 no commit enviado. O loader consulta versao.json em main e carrega os arquivos dessa tag; sem ela, a nova versão não carrega.
+Crie a tag/release v0.1.28 no commit enviado. O loader consulta versao.json em main e carrega os arquivos dessa tag; sem ela, a nova versão não carrega.
+
+Correções desta versão: remoção do gradiente da narração lateral e reserva de espaço para as borboletas dentro da largura total do modelo header largo. A caixa desse modelo fica um pouco mais estreita para acomodar o adorno sem cortes. Se o CDN continuar indicando uma versão antiga, o loader.js incluído usa v0.1.28 como piso.
 
 O loader V2 já instalado consulta esse ponteiro automaticamente. Se estiver usando um loader antigo fixo, substitua-o pelo loader.js deste pacote.
 
