@@ -7,3 +7,54 @@
    Não mover para cá o CSS crítico anti-flash. Ele deve continuar na folha de
    estilo do Forumeiros para existir antes de qualquer requisição externa.
 */
+
+/* Falha Coletiva — modelos secundários aprovados, v0.1.27.
+   Escopo por classe e data-evento: preserva as tags e os demais eventos. */
+html .arcane-me-update.falha[data-evento],html .arcane-me-rp.falha[data-evento]{
+  --fc-arte:url("falha-alucinogena-header.png");
+  --fc-borboletas:url("borboletas-luminosas-trio-verde.png");
+  color:#cbd6d3;
+}
+html .arcane-me-update.falha[data-evento]{box-sizing:border-box;max-width:780px;border:1px solid #345448;background:#040c09;box-shadow:0 18px 80px #000}
+html .arcane-me-update.falha[data-evento] .mu-header{height:auto;min-height:235px;padding:70px 40px 35px;border:0;background:#03100d var(--fc-arte) center 38%/cover no-repeat!important}
+html .arcane-me-update.falha[data-evento] .mu-header:before{background:linear-gradient(0deg,#040c09 0%,rgba(4,12,9,.05) 88%),linear-gradient(90deg,#020705dd,transparent 90%);mix-blend-mode:normal}
+html .arcane-me-update.falha[data-evento] .mu-header:after,
+html .arcane-me-update.falha[data-evento] .mu-body:before,
+html .arcane-me-update.falha[data-evento] .mu-body:after{content:none!important}
+html .arcane-me-update.falha[data-evento] .mu-detail,
+html .arcane-me-update.falha[data-evento] .mu-transition{display:none}
+html .arcane-me-update.falha[data-evento] .mu-label{color:#a3eac1;font-size:8px;letter-spacing:3px}
+html .arcane-me-update.falha[data-evento] .mu-title{max-width:450px;margin:15px 0 4px;font:normal 43px/.98 "Modern Aesthetic",serif;color:#eef7f4;text-shadow:2px 0 #58f5f044,-1px 0 #bd79df44}
+html .arcane-me-update.falha[data-evento] .mu-subtitle{margin-top:12px;color:#c1d0c6;font:400 12px/1.5 Poppins,Arial,sans-serif}
+html .arcane-me-update.falha[data-evento] .mu-body{padding:5px 55px 48px;border:0;background:radial-gradient(ellipse at 0 40%,#16362666,transparent 40%),radial-gradient(ellipse at 100% 75%,#29312655,transparent 35%),#040c09!important}
+html .arcane-me-update.falha[data-evento] texto-update,
+html .arcane-me-rp.falha[data-evento] .me-corpo{display:block;color:#cbd6d3;font:400 13px/1.65 Poppins,Arial,sans-serif;text-align:left}
+html .arcane-me-update.falha[data-evento] texto-update p,
+html .arcane-me-rp.falha[data-evento] .me-corpo p{font:inherit!important;letter-spacing:0!important;margin:0 0 18px!important}
+html .arcane-me-update.falha[data-evento] texto-update p:last-child,
+html .arcane-me-rp.falha[data-evento] .me-corpo p:last-child{margin-bottom:0!important}
+html .arcane-me-update.falha[data-evento] texto-update p:first-of-type:first-letter,
+html .arcane-me-rp.falha[data-evento] .me-corpo p:first-of-type:first-letter{float:left;font:46px/.85 "Modern Aesthetic",serif;color:#a0e7be;padding:6px 8px 0 0;text-shadow:0 0 15px #64ffac35}
+html .arcane-me-rp.falha[data-evento] .me-caixa{position:relative;border:1px solid #345448;background:#040c09;box-shadow:0 18px 80px #000}
+html .arcane-me-rp.falha[data-evento].visual-header .me-caixa{overflow:visible}
+html .arcane-me-rp.falha[data-evento].visual-header .me-topo{height:180px;background:#06100d var(--fc-arte) center 42%/cover no-repeat!important;mask-image:linear-gradient(#000 35%,transparent 100%)}
+html .arcane-me-rp.falha[data-evento].visual-header .me-topo:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#040c0944,transparent,#040c0977)}
+html .arcane-me-rp.falha[data-evento].visual-header .me-caixa:before{content:"";position:absolute;z-index:3;left:-89px;top:100px;width:178px;height:218px;background:var(--fc-borboletas) center/contain no-repeat;transform:rotate(-7deg);filter:brightness(.82);pointer-events:none}
+html .arcane-me-rp.falha[data-evento].visual-header .me-corpo{position:relative;margin-top:-10px;padding:0 55px 48px;background:radial-gradient(ellipse at right bottom,#163b2855,transparent 60%)!important}
+html .arcane-me-rp.falha[data-evento].visual-lateral .me-caixa{display:grid;grid-template-columns:125px minmax(0,1fr);overflow:hidden}
+html .arcane-me-rp.falha[data-evento].visual-lateral .me-lateral{min-height:0;border:0;background:#07110e var(--fc-arte) 30% center/auto 100% no-repeat!important;mask-image:linear-gradient(90deg,#000 30%,transparent 100%)}
+html .arcane-me-rp.falha[data-evento].visual-lateral .me-lateral:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#040c09,transparent 45%,#040c0944)}
+html .arcane-me-rp.falha[data-evento].visual-lateral .me-corpo{min-height:0;max-height:426px;margin:12px 12px 12px 0;padding:28px 43px 33px 38px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#568f75 #0b1812;scrollbar-gutter:stable;overscroll-behavior-y:contain;background:radial-gradient(ellipse at left top,#19483325,transparent 60%)!important}
+html .arcane-me-rp.falha[data-evento].visual-lateral .me-corpo::-webkit-scrollbar{width:4px}
+html .arcane-me-rp.falha[data-evento].visual-lateral .me-corpo::-webkit-scrollbar-track{background:#0b1812}
+html .arcane-me-rp.falha[data-evento].visual-lateral .me-corpo::-webkit-scrollbar-thumb{background:#568f75;border-radius:0}
+html .arcane-me-rp.falha[data-evento].visual-lateral .me-corpo::-webkit-scrollbar-button{display:none;width:0;height:0}
+@supports selector(::-webkit-scrollbar){html .arcane-me-rp.falha[data-evento].visual-lateral .me-corpo{scrollbar-width:auto;scrollbar-color:auto}}
+@media(max-width:650px){
+ html .arcane-me-update.falha[data-evento] .mu-header{padding:65px 26px 35px}
+ html .arcane-me-update.falha[data-evento] .mu-title{font-size:34px}
+ html .arcane-me-update.falha[data-evento] .mu-body,html .arcane-me-rp.falha[data-evento].visual-header .me-corpo{padding-left:30px;padding-right:30px}
+ html .arcane-me-rp.falha[data-evento].visual-header .me-caixa:before{width:115px;height:155px;left:-43px;top:82px}
+ html .arcane-me-rp.falha[data-evento].visual-lateral .me-caixa{grid-template-columns:70px minmax(0,1fr)}
+ html .arcane-me-rp.falha[data-evento].visual-lateral .me-corpo{padding-left:28px;padding-right:25px}
+}
