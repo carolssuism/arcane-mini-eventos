@@ -42,6 +42,18 @@
   'use strict';
 
   var EVENTOS = {
+    'surto-poltergeists': {
+      nome: 'Surto de Poltergeists', classe: 'poltergeists', ambiente: 'hogwarts',
+      cor: '#ff28b8', cor2: '#54bfff', cor3: '#ffde00',
+      fundo: '#0e100f', corpo: '#101210', linha: '#a866ff', texto: '#cbd0c7',
+      cores: ['#ff28b8', '#54bfff', '#ffde00', '#ff533f', '#a866ff', '#ff941d'],
+      etiqueta: 'Confusão em Hogwarts', padraoTitulo: 'A BAGUNÇA SÓ COMEÇOU',
+      padraoSubtitulo: 'O castelo perdeu o controle da própria bagunça.',
+      atualizacao: { etiqueta: 'Atualização da narração', imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.34/assets/corredor-poltergeists.png', posicao: 'center 50%' },
+      visuais: [{ valor: 'header', nome: 'Visual · Header' }, { valor: 'lateral', nome: 'Visual · Lateral' }],
+      decoracoes: {},
+      imersao: { ativo: true, deslocamentoInicio: 10 }
+    },
     'blecaute': {
       nome: 'Blecaute em Hogwarts',
       classe: 'blecaute',
@@ -523,6 +535,7 @@
       return null;
     }
     var marcador = document.querySelector('.arcane-mini-evento[data-evento],#arcane-baile-preview,.arcane-evento-estrelas,.arcane-evento-tempestade,.arcane-evento-blecaute,#arcane-blecaute-abertura');
+    if (!marcador) marcador = document.querySelector('.arcane-me-rp[data-evento="surto-poltergeists"],.arcane-me-update[data-evento="surto-poltergeists"]');
     var idMarcador = marcador && marcador.getAttribute('data-evento');
     if (!idMarcador && marcador) {
       if (marcador.classList.contains('arcane-evento-estrelas')) idMarcador = 'chuva-estrelas';
@@ -536,7 +549,7 @@
     }
     var mensagem = document.querySelector('textarea[name="message"]');
     var valor = mensagem ? mensagem.value : '';
-    var achado = valor.match(/data-evento=["'](blecaute|chuva-estrelas|tempestade-magica|baile-mascaras|falha-coletiva)["']/i);
+    var achado = valor.match(/data-evento=["'](blecaute|chuva-estrelas|tempestade-magica|baile-mascaras|falha-coletiva|surto-poltergeists)["']/i);
     if (achado) return { id: achado[1].toLowerCase(), config: EVENTOS[achado[1].toLowerCase()], marcador: null };
     if (/arcane-blecaute-(?:rp|atualizacao)|<texto-(?:blecaute|atualizacao)>/i.test(valor)) return { id: 'blecaute', config: EVENTOS.blecaute, marcador: null };
     if (/arcane-baile-preview|arcane-me-(?:rp|update)[^>]*\bbaile\b/i.test(valor)) return { id: 'baile-mascaras', config: EVENTOS['baile-mascaras'], marcador: null };
@@ -1224,9 +1237,21 @@
     if (marcador) e.marcador = marcador;
   }
 
+  function prepararPoltergeists(e) {
+    if (!e || e.id !== 'surto-poltergeists') return;
+    Array.prototype.forEach.call(document.querySelectorAll('.arcane-mini-evento[data-evento="surto-poltergeists"]'), function (marcador) {
+      marcador.classList.add('arcane-poltergeists-abertura');
+      if (marcador.querySelector('.sp-box')) return;
+      marcador.innerHTML = "<div class=\"sp-box\">\n<header class=\"sp-header\">\n<div class=\"sp-time\"><small>A primeira travessura às</small><strong>08:13</strong></div>\n<div class=\"sp-title\"><span class=\"sp-label\">Mini-evento</span><h1>Surto de<br>Poltergeists</h1><span class=\"sp-label\">O castelo perdeu o controle da própria bagunça.</span></div>\n<span class=\"sp-sign\" aria-hidden=\"true\">É proibido fazer algazarra</span>\n</header>\n<div class=\"sp-body\"><span class=\"inkmarks\" aria-hidden=\"true\"></span>\n<svg class=\"doodles\" viewBox=\"0 0 758 320\" preserveAspectRatio=\"none\" aria-hidden=\"true\">\n<path stroke=\"#339dff\" d=\"M15 18l7 7-4 5 9 5-7 5 6 8M16 20l5 6-4 5 8 5\"/>\n<path stroke=\"#ff533f\" d=\"M12 94l14 16m-13 1 14-18M14 96l10 13\"/>\n<path stroke=\"#a866ff\" d=\"M13 174q18-23 16 1q-2 22-13 12q-7-8 8-11q15-2 9 16\"/>\n<path stroke=\"#ff941d\" d=\"M730 25l9 5-4 7 13-1m-14 7 10 4M730 26l10 5\"/>\n<path stroke=\"#ff45ad\" d=\"M730 227q-12-18-16-5q-3 9 17 22q20-26 9-29q-6-1-10 12\"/>\n<path stroke=\"#ffde00\" d=\"M741 273l-3 8-9 2 8 4 1 10 6-9 8 1-6-6 1-10-6 5\"/>\n<path stroke=\"#339dff\" d=\"M38 307q14-8 24-2t20-1\"/>\n<path stroke=\"#ff45ad\" d=\"M91 306l19-2-7-4m7 4-6 5\"/>\n<path class=\"echo\" stroke=\"#ffde00\" d=\"M740 275l-3 7-9 2 9 4 1 10 7-10\"/>\n</svg>\n<svg class=\"chalk\" viewBox=\"0 0 80 72\" aria-hidden=\"true\"><path d=\"M9 5l-1 7-3 12 1 6M20 8l-4 12-1 12M30 5l-2 8-4 18M41 8l-3 12-2 10M3 27l12-5 13-3 18-8\"/><path class=\"ghost-line\" d=\"M9 5L5 30M20 8L15 32M30 5L24 31M41 8L36 30M3 27L46 11\"/><path d=\"M47 37q12-7 20 2q10 9 3 21q-7 9-20 4q-10-5-10-13q-1-8 7-13M50 45l1 4m10-6-1 5M48 54q8 10 17-2M47 55l2-2M65 51l2 3\"/><path class=\"ghost-line\" d=\"M46 38q14-9 24 5q8 15-6 22q-19 5-24-11M48 54q8 11 17-2\"/></svg>\n<div class=\"sp-copy\">\n<p>O primeiro tinteiro acertou um professor durante o café da manhã. Antes que alguém encontrasse o culpado, gargalhadas responderam debaixo das quatro mesas, as torradas começaram a voar e todas as portas do Salão Principal bateram juntas. Pirraça apareceu junto ao teto, pronto para receber o crédito — até uma segunda figura atravessar a parede e despejar um balde sobre sua cabeça.</p>\n<blockquote class=\"sp-quote\"><span class=\"q-first\">Pela primeira vez,</span> <span class=\"q-name\">Pirraça</span> tinha <span class=\"q-last\">concorrência</span><span class=\"q-burst\">!!!</span></blockquote>\n<p>Ao meio-dia, Hogwarts já não conseguia contar os invasores. Armaduras bloqueavam escadarias, livros mordiam dedos e vozes invisíveis anunciavam regras absurdas pelos corredores. Cada tentativa de impor ordem parecia divertir ainda mais os recém-chegados. Em algum lugar do castelo, alguém acabara de descobrir onde Filch guardava as chaves.</p>\n</div></div></div>\n<span class=\"sp-credit\">[ARCANE]</span>";
+      var horario = marcador.getAttribute('data-horario');
+      if (/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(horario || '')) marcador.querySelector('.sp-time strong').textContent = horario;
+    });
+  }
+
   function preparar() {
     var e = encontrarEvento();
     prepararFalhaColetiva(e);
+    prepararPoltergeists(e);
     sincronizarFaseBaile(e);
     /* O layout precisa ser reduzido antes de calcular a posição dos adornos. */
     aplicarModoImersivo(e);
@@ -1368,6 +1393,7 @@
     { id: 'chuva-estrelas', nome: 'Chuva de Estrelas Cadentes', titulo: 'Chuva de Estrelas Cadentes', modeloPost: '314' },
     { id: 'tempestade-magica', nome: 'Tempestade Mágica', titulo: 'Tempestade Mágica', modeloPost: '322' },
     { id: 'baile-mascaras', nome: 'Baile de Máscaras', titulo: 'Baile de Máscaras', modeloPost: '338' },
+    { id: 'surto-poltergeists', nome: 'Surto de Poltergeists', titulo: 'Surto de Poltergeists', ambiente: 'hogwarts', aberturaMotor: true },
     { id: 'falha-coletiva', nome: 'Falha Coletiva de Magia', titulo: 'Falha Coletiva na Magia', aberturaMotor: true }
   ];
   var estadoServidorSincronizado = false;
@@ -1935,6 +1961,11 @@
   var CHAVE_CACHE = 'arcane:mural-mini-evento:v5';
   var CLASSE_PRONTO = 'arcane-mural-mini-evento-pronto';
   var EVENTOS = [
+    {
+      id: 'surto-poltergeists', titulo: 'Surto de Poltergeists',
+      cor: '#ff28b8', rgb: '255,40,184',
+      resumo: 'Hogwarts virou um campo de travessuras: livros voam, armaduras bloqueiam passagens e Pirraça ganhou concorrência. Exclusivo para personagens em Hogwarts.'
+    },
     {
       id: 'blecaute',
       titulo: 'Blecaute em Hogwarts',
