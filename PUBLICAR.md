@@ -1,5 +1,5 @@
-# Publicação v0.1.36 — Surto de Poltergeists
+# Publicação v0.1.37 — fundo do narrador
 
-Veja TESTAR-POLTERGEISTS-v036.md para envio dos arquivos, criação da tag v0.1.36 e teste da div no fórum.
+Envie todo o conteúdo desta pasta, incluindo assets, e crie a tag v0.1.37 no novo commit. O loader.js incluído força essa versão como piso caso o ponteiro esteja em cache.
 
-Esta versão preserva os ciclos de Baile e Falha da v0.1.33 e adiciona Poltergeists ao motor, painel e mural. Testes locais em ../test-ciclos-v036.cjs. A confirmação visual no fórum deve ser feita após publicar o pacote.
+Correção exclusiva do fundo do narrador Poltergeists: rabiscos sobre o corredor, com tonalidade animada preservada. A div e os modelos de postagem não mudaram.

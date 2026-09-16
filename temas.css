@@ -189,7 +189,7 @@ html .arcane-poltergeists-abertura .sp-copy>p:last-child{margin-bottom:0!importa
 .arcane-poltergeists-abertura .doodles path.echo{display:none}
 /* Faixas do narrador: fundo cromático lento, sem animação de posição/tamanho. */
 html .arcane-me-narracao-poltergeists #rpost-header,
-html .arcane-me-narracao-poltergeists .rrank{position:relative!important;isolation:isolate;overflow:hidden!important;background-image:url("assets/rabiscos-narrador.svg")!important;background-position:center!important;background-size:100% 100%!important;background-repeat:no-repeat!important;animation:arcane-poltergeists-faixa 18s ease-in-out infinite}
+html .arcane-me-narracao-poltergeists .rrank{position:relative!important;isolation:isolate;overflow:hidden!important;background-image:url("assets/rabiscos-narrador.svg"),linear-gradient(90deg,rgba(5,8,7,.45),rgba(5,8,7,.18),rgba(5,8,7,.45)),url("assets/corredor-poltergeists.png")!important;background-position:center,center,center 48%!important;background-size:100% 100%,cover,cover!important;background-repeat:no-repeat!important;background-blend-mode:normal,normal,luminosity!important;animation:arcane-poltergeists-faixa 18s ease-in-out infinite}
 html .arcane-me-narracao-poltergeists #rpost-header:before,
 html .arcane-me-narracao-poltergeists .rrank:before{background:transparent!important}
 html .arcane-me-narracao-poltergeists #rpost-header .poster-name,
@@ -207,7 +207,7 @@ html .arcane-me-narracao-poltergeists .rrank>div{position:relative;z-index:2;tex
  html .arcane-me-narracao-poltergeists #rpost-header .poster-name,html .arcane-me-narracao-poltergeists #rpost-header .poster-name *,
  html .arcane-me-narracao-poltergeists .rrank>div{animation:none;color:#ff59c6!important}
 }
-/* v0.1.36 — modelos aprovados, restritos ao Poltergeists */
+/* v0.1.37 — modelos aprovados, restritos ao Poltergeists */
 html .arcane-me-rp.poltergeists .me-caixa,html .arcane-me-update.poltergeists{position:relative;isolation:isolate;border:1px solid transparent!important;border-image:none!important;background:linear-gradient(#101210,#101210) padding-box,linear-gradient(130deg,#ff45ad,#9360ff 25%,#38baff 51%,#ffe000 76%,#ff7638) border-box!important}
 html .arcane-me-rp.poltergeists .me-caixa{overflow:hidden}
 html .arcane-me-rp.poltergeists.visual-header .me-caixa{display:block!important}
