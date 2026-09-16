@@ -4,7 +4,7 @@
 (function (window) {
   'use strict';
   window.ArcaneMiniEventosTemas = {
-    versao: '0.1.34',
+    versao: '0.1.36',
     eventos: {
     'surto-poltergeists': {
       nome: 'Surto de Poltergeists', classe: 'poltergeists', ambiente: 'hogwarts',
@@ -13,8 +13,8 @@
       cores: ['#ff28b8', '#54bfff', '#ffde00', '#ff533f', '#a866ff', '#ff941d'],
       etiqueta: 'Confusão em Hogwarts', padraoTitulo: 'A BAGUNÇA SÓ COMEÇOU',
       padraoSubtitulo: 'O castelo perdeu o controle da própria bagunça.',
-      atualizacao: { etiqueta: 'Atualização da narração', imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.34/assets/corredor-poltergeists.png', posicao: 'center 50%' },
-      visuais: [{ valor: 'header', nome: 'Visual · Header' }, { valor: 'lateral', nome: 'Visual · Lateral' }],
+      atualizacao: { etiqueta: 'Atualização da narração', imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.36/assets/corredor-poltergeists.png', posicao: 'center 50%' },
+      visuais: [{ valor: 'header', nome: 'Visual · Bilhete' }, { valor: 'lateral', nome: 'Visual · Lateral' }],
       decoracoes: {},
       imersao: { ativo: true, deslocamentoInicio: 10 }
     },

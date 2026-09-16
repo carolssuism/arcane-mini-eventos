@@ -49,8 +49,8 @@
       cores: ['#ff28b8', '#54bfff', '#ffde00', '#ff533f', '#a866ff', '#ff941d'],
       etiqueta: 'Confusão em Hogwarts', padraoTitulo: 'A BAGUNÇA SÓ COMEÇOU',
       padraoSubtitulo: 'O castelo perdeu o controle da própria bagunça.',
-      atualizacao: { etiqueta: 'Atualização da narração', imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.34/assets/corredor-poltergeists.png', posicao: 'center 50%' },
-      visuais: [{ valor: 'header', nome: 'Visual · Header' }, { valor: 'lateral', nome: 'Visual · Lateral' }],
+      atualizacao: { etiqueta: 'Atualização da narração', imagem: 'https://cdn.jsdelivr.net/gh/carolssuism/arcane-mini-eventos@v0.1.36/assets/corredor-poltergeists.png', posicao: 'center 50%' },
+      visuais: [{ valor: 'header', nome: 'Visual · Bilhete' }, { valor: 'lateral', nome: 'Visual · Lateral' }],
       decoracoes: {},
       imersao: { ativo: true, deslocamentoInicio: 10 }
     },
@@ -969,6 +969,10 @@
   }
 
   function criarPost(e, texto, largura, visual) {
+    if (e.id === 'surto-poltergeists') {
+      var tipo = visual === 'lateral' ? 'lateral' : 'header';
+      return '<div class="arcane-me-rp poltergeists ' + largura + ' visual-' + tipo + '" data-evento="surto-poltergeists"><div class="me-caixa"><span class="pg-mark pg-heart" aria-hidden="true">♡</span><span class="pg-mark pg-star" aria-hidden="true">☆</span><span class="pg-mark pg-note" aria-hidden="true">ops…</span><span class="pg-mark pg-burst" aria-hidden="true">!!</span><div class="me-lateral"></div><div class="me-corpo"><texto-evento>' + texto + '</texto-evento></div></div></div>';
+    }
     if (e.id === 'chuva-estrelas') {
       if (visual === 'celeste') {
         return '<div class="arcane-estrelas-celeste ' + largura + '" data-evento="' + e.id + '"><div class="ec-caixa"><div class="ec-topo"><span class="ec-stars" aria-hidden="true">' + '<i></i>'.repeat(24) + '</span></div><div class="ec-corpo"><texto-evento>' + texto + '</texto-evento></div></div></div>';
@@ -989,6 +993,9 @@
     var etiqueta = escapar(a.etiqueta || 'Atualização da narração') || 'ATUALIZAÇÃO DA NARRAÇÃO';
     titulo = escapar(titulo) || e.config.padraoTitulo;
     subtitulo = escapar(subtitulo) || e.config.padraoSubtitulo;
+    if (e.id === 'surto-poltergeists') {
+      return '<div class="arcane-me-update poltergeists" data-evento="surto-poltergeists"><meta-titulo>' + titulo + '</meta-titulo><meta-subtitulo>' + subtitulo + '</meta-subtitulo><div class="mu-header"><div class="mu-label">' + etiqueta + '</div><div class="mu-title">' + titulo + '</div><div class="mu-subtitle">' + subtitulo + '</div></div><span class="pg-mark pg-heart" aria-hidden="true">♡</span><span class="pg-mark pg-star" aria-hidden="true">☆</span><span class="pg-mark pg-note" aria-hidden="true">ops…</span><span class="pg-mark pg-burst" aria-hidden="true">!!</span><div class="mu-body"><texto-update>' + texto + '</texto-update></div></div>';
+    }
     var marcadorFase = e.id === 'baile-mascaras' && ativarFaseRubra
       ? '<span class="arcane-baile-fase-rubra" aria-hidden="true" style="display:none!important">MORTE RUBRA</span>'
       : '';
@@ -999,7 +1006,7 @@
     var id = 'arcane-me-post-css-' + e.id;
     var fontes = document.createElement('link');
     fontes.rel = 'stylesheet';
-    fontes.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap';
+    fontes.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Poppins:wght@400;500;600&family=Caveat:wght@600&display=swap';
     (document.head || document.documentElement).appendChild(fontes);
     var moderna = document.createElement('link');
     moderna.rel = 'stylesheet';

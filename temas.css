@@ -171,3 +171,79 @@ html .arcane-me-rp.falha[data-evento].visual-header.largo{padding-left:45px;padd
 .arcane-poltergeists-abertura .sp-title h1{padding:0;border:0;background:none;font-weight:normal}
 html .arcane-me-rp.poltergeists .me-topo,html .arcane-me-rp.poltergeists .me-lateral{background-image:linear-gradient(90deg,#0e100f88,transparent),url("assets/corredor-poltergeists.png")!important;background-size:cover!important;background-position:center!important}
 html .arcane-me-rp.poltergeists .me-caixa,html .arcane-me-update.poltergeists{border-image:linear-gradient(135deg,#ff28b8,#54bfff,#ffde00,#ff533f) 1}
+/* v0.1.35 — tipografia explícita: o fórum não deve aumentar os parágrafos. */
+html .arcane-poltergeists-abertura .sp-copy>p{font:400 13.2px/1.4 Poppins,Arial,sans-serif!important;letter-spacing:0!important;margin:0 0 16px!important}
+html .arcane-poltergeists-abertura .sp-copy>p:last-child{margin-bottom:0!important}
+.arcane-poltergeists-abertura .sp-body{overflow:hidden}
+.arcane-poltergeists-abertura .sp-quote{margin-top:20px;margin-bottom:22px}
+.arcane-poltergeists-abertura .chalk{width:29px;height:54px;right:10px;top:42%;transform:rotate(-17deg)}
+.arcane-poltergeists-abertura .doodles path{transform-box:fill-box;transform-origin:center}
+.arcane-poltergeists-abertura .doodles path:nth-child(1){transform:translate(4px,12px) rotate(-19deg) scale(.72)}
+.arcane-poltergeists-abertura .doodles path:nth-child(2){transform:translate(0px,35px) rotate(17deg) scale(.8)}
+.arcane-poltergeists-abertura .doodles path:nth-child(3){transform:translate(4px,-7px) rotate(-24deg) scale(1.25,.8)}
+.arcane-poltergeists-abertura .doodles path:nth-child(4){transform:translate(-4px,4px) rotate(25deg) scale(.65)}
+.arcane-poltergeists-abertura .doodles path:nth-child(5){transform:translate(2px,-33px) rotate(-16deg) scale(.85)}
+.arcane-poltergeists-abertura .doodles path:nth-child(6){transform:translate(-3px,7px) rotate(19deg) scale(1.16)}
+.arcane-poltergeists-abertura .doodles path:nth-child(7){transform:translate(56px,0) rotate(-7deg) scale(1.3,.8)}
+.arcane-poltergeists-abertura .doodles path:nth-child(8){transform:translate(86px,0) rotate(12deg) scale(.75)}
+.arcane-poltergeists-abertura .doodles path.echo{display:none}
+/* Faixas do narrador: fundo cromático lento, sem animação de posição/tamanho. */
+html .arcane-me-narracao-poltergeists #rpost-header,
+html .arcane-me-narracao-poltergeists .rrank{position:relative!important;isolation:isolate;overflow:hidden!important;background-image:url("assets/rabiscos-narrador.svg")!important;background-position:center!important;background-size:100% 100%!important;background-repeat:no-repeat!important;animation:arcane-poltergeists-faixa 18s ease-in-out infinite}
+html .arcane-me-narracao-poltergeists #rpost-header:before,
+html .arcane-me-narracao-poltergeists .rrank:before{background:transparent!important}
+html .arcane-me-narracao-poltergeists #rpost-header .poster-name,
+html .arcane-me-narracao-poltergeists #rpost-header .poster-name *,
+html .arcane-me-narracao-poltergeists .rrank>div{position:relative;z-index:2;text-shadow:0 2px 5px #000!important;animation:arcane-poltergeists-nome 14s ease-in-out infinite}
+@keyframes arcane-poltergeists-nome{0%,100%{color:#ff59c6}25%{color:#54bfff}50%{color:#ffe449}75%{color:#ff9751}}
+@keyframes arcane-poltergeists-faixa{0%,100%{background-color:#281021}25%{background-color:#101e31}50%{background-color:#292510}75%{background-color:#2d1910}}
+@media(max-width:650px){
+ html .arcane-poltergeists-abertura .sp-copy>p{font-size:12px!important}
+ .arcane-poltergeists-abertura .sp-body{padding-left:34px;padding-right:34px}
+ .arcane-poltergeists-abertura .chalk{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ html .arcane-me-narracao-poltergeists #rpost-header,html .arcane-me-narracao-poltergeists .rrank,
+ html .arcane-me-narracao-poltergeists #rpost-header .poster-name,html .arcane-me-narracao-poltergeists #rpost-header .poster-name *,
+ html .arcane-me-narracao-poltergeists .rrank>div{animation:none;color:#ff59c6!important}
+}
+/* v0.1.36 — modelos aprovados, restritos ao Poltergeists */
+html .arcane-me-rp.poltergeists .me-caixa,html .arcane-me-update.poltergeists{position:relative;isolation:isolate;border:1px solid transparent!important;border-image:none!important;background:linear-gradient(#101210,#101210) padding-box,linear-gradient(130deg,#ff45ad,#9360ff 25%,#38baff 51%,#ffe000 76%,#ff7638) border-box!important}
+html .arcane-me-rp.poltergeists .me-caixa{overflow:hidden}
+html .arcane-me-rp.poltergeists.visual-header .me-caixa{display:block!important}
+html .arcane-me-rp.poltergeists.visual-header .me-topo,html .arcane-me-rp.poltergeists.visual-header .me-lateral{display:none!important}
+html .arcane-me-rp.poltergeists .me-corpo{padding:44px 52px 37px!important;background:none!important}
+html .arcane-me-rp.poltergeists .me-corpo:before,html .arcane-me-rp.poltergeists .me-corpo:after,html .arcane-me-update.poltergeists .mu-body:before,html .arcane-me-update.poltergeists .mu-body:after{display:none!important}
+html .arcane-me-rp.poltergeists texto-evento,html .arcane-me-update.poltergeists texto-update{display:block;font:400 13.2px/1.4 Poppins,Arial,sans-serif!important;letter-spacing:0!important;color:#cbd0c7;text-align:left!important}
+html .arcane-me-rp.poltergeists texto-evento p,html .arcane-me-update.poltergeists texto-update p{font:inherit!important;letter-spacing:0!important;margin:0 0 19px}
+html .arcane-me-rp.poltergeists texto-evento::first-letter,html .arcane-me-update.poltergeists texto-update::first-letter{float:left;font:46px/.85 'Modern Aesthetic',Georgia,serif!important;padding:6px 8px 0 0;color:#ff45ad}
+html .arcane-me-rp.poltergeists .pg-mark,html .arcane-me-update.poltergeists .pg-mark{position:absolute;pointer-events:none;z-index:2;font:34px/1 'Caveat',cursive;color:#ff45ad;transform:rotate(-15deg)}
+html .poltergeists .pg-heart{right:25px;top:9px}
+html .poltergeists .pg-star{right:10px;bottom:18px;top:auto;color:#ffe000!important;font-size:39px!important;transform:rotate(18deg)!important}
+html .poltergeists .pg-note{left:16px;top:8px;color:#38baff!important;font-size:28px!important}
+html .poltergeists .pg-burst{left:8px;top:58%;color:#b278ff!important;font-size:24px!important}
+html .arcane-me-rp.poltergeists.visual-lateral .me-caixa{display:grid!important;grid-template-columns:112px minmax(0,1fr);height:365px!important}
+html .arcane-me-rp.poltergeists.visual-lateral .me-lateral{display:block!important;position:relative!important;inset:auto!important;width:auto!important;height:100%!important;min-height:0!important;background:linear-gradient(0deg,#101210,transparent 45%),url("assets/corredor-poltergeists.png") 63% center/auto 100%!important}
+html .arcane-me-rp.poltergeists.visual-lateral .me-lateral:after{display:none!important}
+html .arcane-me-rp.poltergeists.visual-lateral .me-corpo{padding:18px 20px 18px 28px!important;margin:12px 12px 12px 0;min-height:0;overflow:auto!important;scrollbar-width:thin;scrollbar-color:#ff45ad #171e1a}
+html .arcane-me-rp.poltergeists.visual-lateral .me-corpo::-webkit-scrollbar{width:4px}
+html .arcane-me-rp.poltergeists.visual-lateral .me-corpo::-webkit-scrollbar-thumb{background:#ff45ad;border-radius:0}
+html .arcane-me-rp.poltergeists.visual-lateral .me-corpo::-webkit-scrollbar-button{display:none;width:0;height:0}
+html .arcane-me-rp.poltergeists.visual-lateral .pg-heart{left:13px;top:24px;right:auto;font-size:48px}
+html .arcane-me-rp.poltergeists.visual-lateral .pg-star{left:29px;right:auto;bottom:22px}
+html .arcane-me-rp.poltergeists.visual-lateral .pg-note,html .arcane-me-rp.poltergeists.visual-lateral .pg-burst{display:none}
+html .arcane-me-rp.poltergeists.visual-lateral texto-evento::first-letter{color:#54bfff}
+html .arcane-me-update.poltergeists .mu-header{min-height:175px;padding:33px 44px 24px;border:0!important;background:linear-gradient(90deg,#080b0bea,transparent),linear-gradient(0deg,#101210,transparent),url("assets/corredor-poltergeists.png") center/cover!important}
+html .arcane-me-update.poltergeists .mu-header:before,html .arcane-me-update.poltergeists .mu-header:after,html .arcane-me-update.poltergeists .mu-transition{display:none!important}
+html .arcane-me-update.poltergeists .mu-title{font:normal 36px/.98 'Modern Aesthetic',Georgia,serif!important;margin:16px 0 10px;animation:arcane-poltergeists-cores 16s ease-in-out infinite}
+html .arcane-me-update.poltergeists .mu-label{color:#ff45ad}
+html .arcane-me-update.poltergeists .mu-subtitle{font:12px Poppins!important;color:#b9c6c0}
+html .arcane-me-update.poltergeists .mu-body{border:0!important;background:none!important;padding:24px 50px 32px!important}
+html .arcane-me-update.poltergeists .pg-heart{top:144px;left:10px;right:auto}
+html .arcane-me-update.poltergeists .pg-star{top:146px;right:16px;bottom:auto}
+html .arcane-me-update.poltergeists .pg-note{display:none}
+html .arcane-me-update.poltergeists .pg-burst{top:auto;bottom:10px;color:#ff9638!important}
+html .arcane-me-update.poltergeists texto-update::first-letter{color:#ffe000}
+html .arcane-me-update.poltergeists:after{position:absolute;top:100%;left:0;right:0;margin:7px 0 0;content:'[ARCANE]';text-align:center;font:700 8.5px/normal Consolas,monospace;color:#969696}
+@media(max-width:540px){html .arcane-me-rp.poltergeists .me-corpo,html .arcane-me-update.poltergeists .mu-body{padding-left:35px!important;padding-right:35px!important}html .arcane-me-rp.poltergeists.visual-lateral .me-caixa{grid-template-columns:65px minmax(0,1fr)}html .arcane-me-rp.poltergeists.visual-lateral .me-corpo{padding-left:18px!important;padding-right:15px!important}html .arcane-me-rp.poltergeists texto-evento,html .arcane-me-update.poltergeists texto-update{font-size:12px!important}html .arcane-me-update.poltergeists .mu-title{font-size:29px!important}}
+@media(prefers-reduced-motion:reduce){html .arcane-me-update.poltergeists .mu-title{animation:none}}
