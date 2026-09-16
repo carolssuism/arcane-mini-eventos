@@ -8,6 +8,8 @@
    estilo do Forumeiros para existir antes de qualquer requisição externa.
 */
 
+#arcane-falha-abertura .fc-copy > p:first-child::first-letter{float:left;font:46px/.85 "Modern Aesthetic",serif;color:#a0e7be;padding:6px 8px 0 0;text-shadow:0 0 15px #64ffac35}
+
 /* Falha Coletiva — modelos secundários aprovados, v0.1.29.
    Escopo por classe e data-evento: preserva as tags e os demais eventos. */
 html .arcane-me-update.falha[data-evento],html .arcane-me-rp.falha[data-evento]{

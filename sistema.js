@@ -5,6 +5,35 @@
   if (window.__ARCANE_MINI_EVENTOS_SISTEMA_V1__) return;
   window.__ARCANE_MINI_EVENTOS_SISTEMA_V1__ = true;
 
+  // Consulta somente páginas do mesmo tópico para localizar a virada publicada.
+  async function consultarFaseRubra(doc, urlTopico) {
+    var inicial = new URL(urlTopico, location.origin);
+    var id = inicial.pathname.match(/^\/t(\d+)(?:p\d+)?(?:-|$)/);
+    if (!id) return false;
+    var fila = [], vistos = {};
+    vistos[inicial.pathname + inicial.search] = true;
+    function adicionarPaginas(pagina) {
+      Array.prototype.forEach.call(pagina.querySelectorAll('.pagination a[href],a[rel="next"][href]'), function (link) {
+        var url = new URL(link.getAttribute('href'), inicial);
+        var topico = url.pathname.match(/^\/t(\d+)(?:p\d+)?(?:-|$)/);
+        var chave = url.pathname + url.search;
+        if (url.origin !== inicial.origin || !topico || topico[1] !== id[1] || vistos[chave]) return;
+        vistos[chave] = true;
+        fila.push(url.href);
+      });
+    }
+    if (doc.querySelector('.arcane-baile-fase-rubra')) return true;
+    adicionarPaginas(doc);
+    while (fila.length) {
+      var resposta = await fetch(fila.shift(), { credentials: 'same-origin', cache: 'no-store' });
+      if (!resposta.ok) throw new Error('Não foi possível consultar a fase do Baile.');
+      var pagina = new DOMParser().parseFromString(await resposta.text(), 'text/html');
+      if (pagina.querySelector('.arcane-baile-fase-rubra')) return true;
+      adicionarPaginas(pagina);
+    }
+    return false;
+  }
+
 /* ARCANE · MINI-EVENTOS · MOTOR UNIFICADO V68 · IDENTIDADE ATÔMICA DO NARRADOR · CSS FRACIONADO
    Eventos: Blecaute + Chuva de Estrelas + Tempestade Mágica + Baile de Máscaras
    Aplicação: em todas as páginas.
@@ -1106,7 +1135,7 @@
       'As portas se fecharam ao mesmo tempo. Mãos apressadas buscaram laços, fivelas e fitas, mas as máscaras não deixavam mais os rostos: porcelana, metal e renda haviam se tornado quentes como pele. Quando a figura rubra desceu o primeiro degrau, a música recomeçou sozinha — e o salão exigiu outra dança.'
     ];
     function atualizar() {
-      var rubraPublicada = !!document.querySelector('.arcane-baile-fase-rubra');
+      var rubraPublicada = !!document.querySelector('.arcane-baile-fase-rubra') || document.documentElement.getAttribute('data-arcane-baile-rubra-publicada') === '1';
       var rubra = rubraPublicada;
       /* O controle legado da abertura agora é somente um indicador visual. A
          fase nasce prateada e só muda quando uma atualização do ADM publica o
@@ -1140,6 +1169,17 @@
       });
     }
     atualizar();
+    if (!document.documentElement.hasAttribute('data-arcane-baile-fase-consultada')) {
+      document.documentElement.setAttribute('data-arcane-baile-fase-consultada', '1');
+      consultarFaseRubra(document, location.href).then(function (rubra) {
+        if (rubra) {
+          document.documentElement.setAttribute('data-arcane-baile-rubra-publicada', '1');
+          atualizar();
+        }
+      }).catch(function () {
+        document.documentElement.removeAttribute('data-arcane-baile-fase-consultada');
+      });
+    }
   }
 
   function prepararFalhaColetiva(e) {
@@ -1327,7 +1367,8 @@
     { id: 'blecaute', nome: 'Blecaute em Hogwarts', titulo: 'Blecaute em Hogwarts', modeloPost: '309' },
     { id: 'chuva-estrelas', nome: 'Chuva de Estrelas Cadentes', titulo: 'Chuva de Estrelas Cadentes', modeloPost: '314' },
     { id: 'tempestade-magica', nome: 'Tempestade Mágica', titulo: 'Tempestade Mágica', modeloPost: '322' },
-    { id: 'baile-mascaras', nome: 'Baile de Máscaras', titulo: 'Baile de Máscaras', modeloPost: '338' }
+    { id: 'baile-mascaras', nome: 'Baile de Máscaras', titulo: 'Baile de Máscaras', modeloPost: '338' },
+    { id: 'falha-coletiva', nome: 'Falha Coletiva de Magia', titulo: 'Falha Coletiva na Magia', aberturaMotor: true }
   ];
   var estadoServidorSincronizado = false;
 
@@ -1413,6 +1454,7 @@
   }
 
   async function obterAbertura(evento) {
+    if (evento.aberturaMotor) return '<div class="arcane-mini-evento" data-evento="' + evento.id + '"></div>';
     var pagina = await obterDocumento('/post?p=' + evento.modeloPost + '&mode=editpost');
     verificarLogin(pagina.doc);
     var campo = pagina.doc.querySelector('textarea[name="message"]');
@@ -1890,7 +1932,7 @@
 
   var FORUM_ATIVO = '3';
   var INTERVALO = 5 * 60 * 1000;
-  var CHAVE_CACHE = 'arcane:mural-mini-evento:v4';
+  var CHAVE_CACHE = 'arcane:mural-mini-evento:v5';
   var CLASSE_PRONTO = 'arcane-mural-mini-evento-pronto';
   var EVENTOS = [
     {
@@ -1916,6 +1958,12 @@
       titulo: 'Baile de Máscaras',
       cor: '#c9c3b5', rgb: '201,195,181',
       resumo: 'As portas do salão se abriram. Entre máscaras, música e promessas veladas, cada convidado escolhe o rosto que deseja mostrar.'
+    },
+    {
+      id: 'falha-coletiva',
+      titulo: 'Falha Coletiva na Magia',
+      cor: '#58f5f0', rgb: '88,245,240',
+      resumo: 'Feitiços falham e encantamentos se voltam contra seus donos. Por todo o mundo bruxo, a magia deixou de obedecer.'
     }
   ];
 
@@ -1946,6 +1994,7 @@
         salvoEm: Date.now(),
         ativo: ativo ? {
           eventoId: ativo.evento.id,
+          rubra: !!ativo.rubra,
           topico: ativo.topico,
           url: ativo.url,
           inicioEm: ativo.inicioEm,
@@ -1968,6 +2017,7 @@
     if (!evento || !dados.fimEm || Date.now() >= Date.parse(dados.fimEm)) return false;
     aplicarEvento({
       evento: evento,
+      rubra: !!dados.rubra,
       topico: dados.topico,
       url: dados.url,
       inicioEm: dados.inicioEm,
@@ -2048,7 +2098,9 @@
     if (!original || !card) return;
     var termino = new Date(ativo.fimEm);
     card.querySelector('strong').textContent = ativo.evento.titulo;
-    card.querySelector('span').textContent = ativo.evento.resumo + ' O evento ficará disponível até ' + formatarData(termino, true) + '.';
+    var rubra = ativo.evento.id === 'baile-mascaras' && ativo.rubra;
+    var resumo = rubra ? 'As portas se fecharam e as máscaras não deixam mais os rostos. A Morte Rubra desceu a escadaria — e o salão exige outra dança.' : ativo.evento.resumo;
+    card.querySelector('span').textContent = resumo + ' O evento ficará disponível até ' + formatarData(termino, true) + '.';
     var link = card.querySelector('a');
     if (!link) {
       link = document.createElement('a');
@@ -2058,8 +2110,8 @@
     link.setAttribute('href', ativo.url);
     link.textContent = 'Ler evento';
     card.setAttribute('data-mini-evento-ativo', ativo.evento.id);
-    card.style.setProperty('--arcane-mini-cor', ativo.evento.cor);
-    card.style.setProperty('--arcane-mini-rgb', ativo.evento.rgb);
+    card.style.setProperty('--arcane-mini-cor', rubra ? '#e22a2a' : ativo.evento.cor);
+    card.style.setProperty('--arcane-mini-rgb', rubra ? '226,42,42' : ativo.evento.rgb);
   }
 
   function instalarEstilo() {
@@ -2105,14 +2157,16 @@
   }
 
   function verificarCandidato(candidato) {
-    return obterDocumento(candidato.url).then(function (documento) {
+    return obterDocumento(candidato.url).then(async function (documento) {
       var marcador = documento.querySelector('.arcane-mini-evento-estado[data-evento-id="' + candidato.evento.id + '"]');
       if (!marcador) return null;
       var fimEm = marcador.getAttribute('data-evento-fim');
       var inicioEm = marcador.getAttribute('data-evento-inicio');
       if (!fimEm || !inicioEm || !Number.isFinite(Date.parse(fimEm))) return null;
       if (Date.now() >= Date.parse(fimEm)) return null;
+      var rubra = candidato.evento.id === 'baile-mascaras' ? await consultarFaseRubra(documento, candidato.url) : false;
       return {
+        rubra: rubra,
         evento: candidato.evento,
         topico: candidato.topico,
         url: candidato.url,
